@@ -7,10 +7,12 @@
 <meta name="theme-color" content="#0a0a0a" />
 <title>Bustelo Automotores — Tu próximo auto te está esperando</title>
 
+<!-- Fuentes -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
 
+<!-- Favicon -->
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%230a0a0a' rx='20'/%3E%3Cpath d='M20 60 L50 35 L80 60 L80 70 L20 70 Z' fill='%23dc1f1f'/%3E%3C/svg%3E">
 
 <style>
@@ -27,15 +29,19 @@
   --gray-border: #2a2a2a;
   --max-width: 1200px;
   --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-
-  /* Padding adaptativo: clamp(min, ideal, max) */
-  --container-pad: clamp(1rem, 4vw, 1.5rem);
-  --section-pad-y: clamp(3.5rem, 8vw, 6rem);
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
 
-html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
 
 body {
   font-family: 'Inter', -apple-system, sans-serif;
@@ -44,11 +50,15 @@ body {
   line-height: 1.6;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  width: 100%;
   min-width: 320px;
 }
 
 img { max-width: 100%; display: block; height: auto; }
+
 a { color: inherit; text-decoration: none; }
+
+button { font-family: inherit; }
 
 /* === Tipografía === */
 h1, h2, h3, h4 {
@@ -56,6 +66,8 @@ h1, h2, h3, h4 {
   font-weight: 800;
   letter-spacing: -0.02em;
   line-height: 1.05;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .eyebrow {
@@ -68,7 +80,7 @@ h1, h2, h3, h4 {
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--red);
-  margin-bottom: 1rem;
+  margin-bottom: 1.25rem;
 }
 
 .eyebrow::before {
@@ -76,7 +88,11 @@ h1, h2, h3, h4 {
   width: 28px;
   height: 2px;
   background: var(--red);
-  flex-shrink: 0;
+}
+
+@media (min-width: 768px) {
+  .eyebrow { font-size: 0.75rem; }
+  .eyebrow::before { width: 32px; }
 }
 
 /* === Botones === */
@@ -85,20 +101,29 @@ h1, h2, h3, h4 {
   align-items: center;
   justify-content: center;
   gap: 10px;
-  padding: 0.95rem 1.75rem;
+  padding: 0.95rem 1.5rem;
   font-family: 'Montserrat', sans-serif;
   font-weight: 700;
   font-size: 0.85rem;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   border: none;
-  border-radius: 6px;
+  border-radius: 4px;
   cursor: pointer;
   transition: all var(--transition);
   white-space: nowrap;
   position: relative;
   overflow: hidden;
   min-height: 48px;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .btn {
+    padding: 1rem 2rem;
+    font-size: 0.875rem;
+    letter-spacing: 0.08em;
+  }
 }
 
 .btn-primary {
@@ -116,7 +141,12 @@ h1, h2, h3, h4 {
   transition: transform 0.6s;
 }
 
-.btn-primary:hover { background: var(--red-glow); transform: translateY(-2px); box-shadow: 0 16px 32px -8px rgba(220, 31, 31, 0.7); }
+.btn-primary:hover {
+  background: var(--red-glow);
+  transform: translateY(-2px);
+  box-shadow: 0 16px 32px -8px rgba(220, 31, 31, 0.7);
+}
+
 .btn-primary:hover::after { transform: translateX(100%); }
 
 .btn-secondary {
@@ -125,18 +155,26 @@ h1, h2, h3, h4 {
   border: 1.5px solid rgba(255,255,255,0.2);
 }
 
-.btn-secondary:hover { background: var(--white); color: var(--black); border-color: var(--white); transform: translateY(-2px); }
+.btn-secondary:hover {
+  background: var(--white);
+  color: var(--black);
+  border-color: var(--white);
+  transform: translateY(-2px);
+}
 
 .btn svg { transition: transform var(--transition); flex-shrink: 0; }
 .btn:hover svg { transform: translateX(4px); }
 
 /* === Container === */
 .container {
-  width: 100%;
   max-width: var(--max-width);
   margin: 0 auto;
-  padding-left: var(--container-pad);
-  padding-right: var(--container-pad);
+  padding: 0 1.25rem;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .container { padding: 0 2rem; }
 }
 
 /* === Navbar === */
@@ -147,7 +185,6 @@ h1, h2, h3, h4 {
   padding: 1rem 0;
   background: transparent;
   transition: all var(--transition);
-  padding-top: max(1rem, env(safe-area-inset-top));
 }
 
 .nav.scrolled {
@@ -156,10 +193,14 @@ h1, h2, h3, h4 {
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--gray-border);
   padding: 0.7rem 0;
-  padding-top: max(0.7rem, env(safe-area-inset-top));
 }
 
-.nav-inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
 
 .logo {
   display: flex;
@@ -167,10 +208,12 @@ h1, h2, h3, h4 {
   gap: 0.65rem;
   font-family: 'Montserrat', sans-serif;
   font-weight: 900;
-  font-size: 1.05rem;
+  font-size: 1rem;
   letter-spacing: 0.02em;
   flex-shrink: 0;
 }
+
+@media (min-width: 768px) { .logo { font-size: 1.15rem; gap: 0.75rem; } }
 
 .logo-mark {
   width: 36px;
@@ -186,12 +229,14 @@ h1, h2, h3, h4 {
   flex-shrink: 0;
 }
 
+@media (min-width: 768px) { .logo-mark { width: 38px; height: 38px; } }
+
 .logo-mark::before {
   content: '';
   position: absolute;
   top: 0; left: 0; right: 0;
   height: 35%;
-  background-image:
+  background-image: 
     linear-gradient(45deg, var(--white) 25%, transparent 25%),
     linear-gradient(-45deg, var(--white) 25%, transparent 25%),
     linear-gradient(45deg, transparent 75%, var(--white) 75%),
@@ -207,7 +252,7 @@ h1, h2, h3, h4 {
   bottom: 6px;
   left: 50%;
   transform: translateX(-50%);
-  width: 22px;
+  width: 20px;
   height: 4px;
   border-radius: 50%;
   background: var(--red);
@@ -217,14 +262,25 @@ h1, h2, h3, h4 {
 .logo-text { line-height: 1; }
 .logo-text small {
   display: block;
-  font-size: 0.55rem;
+  font-size: 0.5rem;
   font-weight: 600;
   letter-spacing: 0.22em;
   color: var(--gray);
   margin-top: 3px;
 }
 
-.nav-links { display: flex; gap: 2.5rem; list-style: none; }
+@media (min-width: 768px) { .logo-text small { font-size: 0.55rem; letter-spacing: 0.25em; } }
+
+.nav-links {
+  display: none;
+  gap: 2.25rem;
+  list-style: none;
+}
+
+@media (min-width: 1024px) {
+  .nav-links { display: flex; }
+}
+
 .nav-links a {
   font-size: 0.875rem;
   font-weight: 500;
@@ -232,7 +288,9 @@ h1, h2, h3, h4 {
   transition: color var(--transition);
   position: relative;
 }
+
 .nav-links a:hover { color: var(--white); }
+
 .nav-links a::after {
   content: '';
   position: absolute;
@@ -241,42 +299,50 @@ h1, h2, h3, h4 {
   background: var(--red);
   transition: width var(--transition);
 }
+
 .nav-links a:hover::after { width: 100%; }
 
 .nav-cta {
-  display: inline-flex;
+  display: none;
   align-items: center;
   gap: 8px;
-  padding: 0.65rem 1.15rem;
+  padding: 0.65rem 1.25rem;
   background: var(--red);
   color: var(--white);
-  border-radius: 6px;
+  border-radius: 4px;
   font-family: 'Montserrat', sans-serif;
   font-weight: 700;
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   transition: all var(--transition);
 }
-.nav-cta:hover { background: var(--red-glow); transform: translateY(-1px); box-shadow: 0 8px 20px -8px rgba(220,31,31,0.6); }
+
+@media (min-width: 1024px) {
+  .nav-cta { display: inline-flex; }
+}
+
+.nav-cta:hover {
+  background: var(--red-glow);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px -8px rgba(220,31,31,0.6);
+}
 
 .nav-toggle {
-  display: none;
-  background: transparent;
-  border: 1px solid var(--gray-border);
-  color: var(--white);
-  cursor: pointer;
-  width: 42px;
-  height: 42px;
-  border-radius: 8px;
+  display: flex;
   align-items: center;
   justify-content: center;
+  background: none;
+  border: none;
+  color: var(--white);
+  cursor: pointer;
+  padding: 0.5rem;
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
 }
 
-@media (max-width: 900px) {
-  .nav-links, .nav-cta { display: none; }
-  .nav-toggle { display: flex; }
-}
+@media (min-width: 1024px) { .nav-toggle { display: none; } }
 
 /* === Mobile menu === */
 .mobile-menu {
@@ -289,27 +355,32 @@ h1, h2, h3, h4 {
   justify-content: center;
   align-items: center;
   gap: 1.5rem;
+  padding: 2rem;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.4s;
-  padding: 2rem var(--container-pad);
-  padding-top: max(2rem, env(safe-area-inset-top));
-  padding-bottom: max(2rem, env(safe-area-inset-bottom));
 }
 
-.mobile-menu.open { opacity: 1; pointer-events: all; }
+.mobile-menu.open {
+  opacity: 1;
+  pointer-events: all;
+}
 
 .mobile-menu a:not(.btn) {
   font-family: 'Montserrat', sans-serif;
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   font-weight: 800;
   letter-spacing: -0.02em;
-  text-transform: uppercase;
+  text-align: center;
 }
 
-.mobile-menu a:not(.btn):hover { color: var(--red); }
+.mobile-menu a:hover { color: var(--red); }
 
-.mobile-menu .btn { margin-top: 1rem; width: 100%; max-width: 300px; }
+.mobile-menu .btn {
+  margin-top: 1rem;
+  width: 100%;
+  max-width: 300px;
+}
 
 /* === HERO === */
 .hero {
@@ -318,19 +389,27 @@ h1, h2, h3, h4 {
   min-height: 100svh;
   display: flex;
   align-items: center;
-  padding: 6.5rem 0 3.5rem;
-  padding-top: max(6.5rem, calc(env(safe-area-inset-top) + 6rem));
+  padding: 6.5rem 0 3rem;
   overflow: hidden;
   background: var(--black);
 }
 
-.hero-bg { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+@media (min-width: 768px) {
+  .hero { padding: 8rem 0 4rem; }
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
 
 .hero-bg::before {
   content: '';
   position: absolute;
   inset: 0;
-  background:
+  background: 
     radial-gradient(ellipse at 80% 50%, rgba(220, 31, 31, 0.18), transparent 60%),
     radial-gradient(ellipse at 10% 100%, rgba(220, 31, 31, 0.12), transparent 50%),
     linear-gradient(180deg, #0a0a0a 0%, #141414 100%);
@@ -339,21 +418,38 @@ h1, h2, h3, h4 {
 .hero-bg::after {
   content: '';
   position: absolute;
-  top: 0; right: -10%;
-  width: 60%; height: 100%;
-  background-image:
+  top: 0;
+  right: -20%;
+  width: 70%;
+  height: 100%;
+  background-image: 
     linear-gradient(45deg, rgba(255,255,255,0.04) 25%, transparent 25%),
     linear-gradient(-45deg, rgba(255,255,255,0.04) 25%, transparent 25%),
     linear-gradient(45deg, transparent 75%, rgba(255,255,255,0.04) 75%),
     linear-gradient(-45deg, transparent 75%, rgba(255,255,255,0.04) 75%);
-  background-size: 40px 40px;
-  background-position: 0 0, 0 20px, 20px -20px, -20px 0;
+  background-size: 30px 30px;
+  background-position: 0 0, 0 15px, 15px -15px, -15px 0;
   mask-image: linear-gradient(45deg, transparent 30%, black 70%, transparent);
   -webkit-mask-image: linear-gradient(45deg, transparent 30%, black 70%, transparent);
-  opacity: 0.5;
+  opacity: 0.4;
 }
 
-.speed-lines { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; z-index: 1; pointer-events: none; }
+@media (min-width: 768px) {
+  .hero-bg::after {
+    background-size: 40px 40px;
+    background-position: 0 0, 0 20px, 20px -20px, -20px 0;
+    opacity: 0.5;
+  }
+}
+
+.speed-lines {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  overflow: hidden;
+  z-index: 1;
+  pointer-events: none;
+}
 
 .speed-line {
   position: absolute;
@@ -363,6 +459,7 @@ h1, h2, h3, h4 {
   opacity: 0;
   animation: zoom 4s linear infinite;
 }
+
 .speed-line:nth-child(1) { top: 20%; left: -30%; width: 40%; animation-delay: 0s; }
 .speed-line:nth-child(2) { top: 40%; left: -30%; width: 30%; animation-delay: 1.2s; }
 .speed-line:nth-child(3) { top: 70%; left: -30%; width: 50%; animation-delay: 2.4s; }
@@ -374,23 +471,36 @@ h1, h2, h3, h4 {
   100% { transform: translateX(250%) rotate(-15deg); opacity: 0; }
 }
 
-.hero-content { position: relative; z-index: 2; width: 100%; }
+.hero-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+}
 
 .hero-badge {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  padding: 0.5rem 1rem;
+  padding: 0.45rem 0.9rem;
   background: rgba(220, 31, 31, 0.1);
   border: 1px solid rgba(220, 31, 31, 0.3);
   border-radius: 100px;
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 600;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--white);
-  margin-bottom: 1.75rem;
+  margin-bottom: 1.5rem;
   animation: fadeInUp 0.8s ease both;
+}
+
+@media (min-width: 768px) {
+  .hero-badge {
+    padding: 0.5rem 1rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    margin-bottom: 2rem;
+  }
 }
 
 .hero-badge .dot {
@@ -408,13 +518,16 @@ h1, h2, h3, h4 {
 }
 
 .hero h1 {
-  font-size: clamp(2.25rem, 8vw, 5.5rem);
+  font-size: clamp(2.25rem, 9vw, 5.5rem);
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: -0.025em;
   margin-bottom: 1.25rem;
   animation: fadeInUp 0.8s 0.1s ease both;
-  line-height: 1.02;
+}
+
+@media (min-width: 768px) {
+  .hero h1 { margin-bottom: 1.5rem; }
 }
 
 .hero h1 .accent {
@@ -426,8 +539,10 @@ h1, h2, h3, h4 {
 .hero h1 .accent::after {
   content: '';
   position: absolute;
-  bottom: 0.05em; left: 0;
-  width: 100%; height: 0.08em;
+  bottom: 0.05em;
+  left: 0;
+  width: 100%;
+  height: 0.08em;
   background: var(--red);
   box-shadow: 0 0 20px var(--red);
 }
@@ -442,19 +557,38 @@ h1, h2, h3, h4 {
 }
 
 .hero p.lead {
-  font-size: clamp(1rem, 2.2vw, 1.2rem);
+  font-size: clamp(1rem, 2.4vw, 1.25rem);
   color: var(--gray-light);
-  max-width: 560px;
+  max-width: 580px;
   margin-bottom: 2rem;
   animation: fadeInUp 0.8s 0.2s ease both;
 }
 
+@media (min-width: 768px) {
+  .hero p.lead { margin-bottom: 2.5rem; }
+}
+
 .hero-buttons {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 0.75rem;
   margin-bottom: 3rem;
   animation: fadeInUp 0.8s 0.3s ease both;
+}
+
+.hero-buttons .btn { width: 100%; }
+
+@media (min-width: 600px) {
+  .hero-buttons {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .hero-buttons .btn { width: auto; }
+}
+
+@media (min-width: 768px) {
+  .hero-buttons { margin-bottom: 4rem; }
 }
 
 @keyframes fadeInUp {
@@ -462,31 +596,42 @@ h1, h2, h3, h4 {
   to { opacity: 1; transform: translateY(0); }
 }
 
+/* Stats hero */
 .hero-stats {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: clamp(0.75rem, 3vw, 2rem);
+  gap: 1rem;
   max-width: 600px;
   padding-top: 2rem;
   border-top: 1px solid var(--gray-border);
   animation: fadeInUp 0.8s 0.4s ease both;
 }
 
+@media (min-width: 768px) {
+  .hero-stats {
+    gap: 2rem;
+    padding-top: 2.5rem;
+  }
+}
+
 .hero-stat .num {
   font-family: 'Montserrat', sans-serif;
-  font-size: clamp(1.5rem, 6vw, 2.5rem);
+  font-size: clamp(1.5rem, 4.5vw, 2.5rem);
   font-weight: 900;
   color: var(--white);
   line-height: 1;
   display: flex;
   align-items: baseline;
-  gap: 2px;
+  gap: 4px;
 }
 
-.hero-stat .num small { font-size: 0.5em; color: var(--red); }
+.hero-stat .num small {
+  font-size: 0.5em;
+  color: var(--red);
+}
 
 .hero-stat .label {
-  font-size: clamp(0.65rem, 1.6vw, 0.78rem);
+  font-size: 0.7rem;
   color: var(--gray);
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -495,12 +640,8 @@ h1, h2, h3, h4 {
   line-height: 1.3;
 }
 
-@media (max-width: 480px) {
-  .hero-buttons { flex-direction: column; gap: 0.65rem; }
-  .hero-buttons .btn { width: 100%; }
-  .hero-stats { gap: 0.75rem; padding-top: 1.5rem; }
-  .hero-stat .num { font-size: 1.5rem; }
-  .hero-stat .label { font-size: 0.65rem; letter-spacing: 0.05em; }
+@media (min-width: 768px) {
+  .hero-stat .label { font-size: 0.78rem; letter-spacing: 0.1em; }
 }
 
 .hero-scroll {
@@ -509,19 +650,24 @@ h1, h2, h3, h4 {
   left: 50%;
   transform: translateX(-50%);
   z-index: 3;
-  font-size: 0.65rem;
+  font-size: 0.7rem;
   text-transform: uppercase;
   letter-spacing: 0.2em;
   color: var(--gray);
   font-weight: 600;
   animation: bounce 2s ease infinite;
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .hero-scroll { display: block; }
 }
 
 .hero-scroll::after {
   content: '';
   display: block;
   width: 1px;
-  height: 28px;
+  height: 32px;
   background: linear-gradient(180deg, var(--gray), transparent);
   margin: 8px auto 0;
 }
@@ -531,23 +677,42 @@ h1, h2, h3, h4 {
   50% { transform: translateX(-50%) translateY(8px); }
 }
 
-@media (max-width: 768px) { .hero-scroll { display: none; } }
-
 /* === SECTIONS === */
-section { padding: var(--section-pad-y) 0; position: relative; }
+section {
+  padding: 4rem 0;
+  position: relative;
+}
 
-.section-header { display: flex; flex-direction: column; margin-bottom: clamp(2.5rem, 5vw, 4rem); }
+@media (min-width: 768px) {
+  section { padding: 6rem 0; }
+}
+
+.section-header {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2.5rem;
+}
+
+@media (min-width: 768px) {
+  .section-header { margin-bottom: 4rem; }
+}
 
 .section-header.between {
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: flex-end;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 1.5rem;
 }
 
+@media (min-width: 900px) {
+  .section-header.between {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+  }
+}
+
 .section-header h2 {
-  font-size: clamp(1.85rem, 5.5vw, 3.5rem);
+  font-size: clamp(1.85rem, 6vw, 3.5rem);
   text-transform: uppercase;
   max-width: 720px;
 }
@@ -558,11 +723,11 @@ section { padding: var(--section-pad-y) 0; position: relative; }
   color: var(--gray);
   margin-top: 1rem;
   max-width: 560px;
-  font-size: clamp(0.95rem, 1.8vw, 1.05rem);
+  font-size: 0.95rem;
 }
 
-@media (max-width: 768px) {
-  .section-header.between { flex-direction: column; align-items: flex-start; }
+@media (min-width: 768px) {
+  .section-header .desc { font-size: 1.05rem; }
 }
 
 /* === STOCK === */
@@ -579,47 +744,53 @@ section { padding: var(--section-pad-y) 0; position: relative; }
 .filters {
   display: flex;
   gap: 0.5rem;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  margin: 0 calc(var(--container-pad) * -1);
-  padding: 0 var(--container-pad);
-  -webkit-overflow-scrolling: touch;
+  flex-wrap: wrap;
 }
 
-.filters::-webkit-scrollbar { display: none; }
-
 .filter-btn {
-  padding: 0.6rem 1.1rem;
+  padding: 0.55rem 1rem;
   background: transparent;
   color: var(--gray-light);
   border: 1px solid var(--gray-border);
   border-radius: 100px;
   font-family: 'Inter', sans-serif;
-  font-size: 0.825rem;
+  font-size: 0.8rem;
   font-weight: 500;
   cursor: pointer;
   transition: all var(--transition);
-  white-space: nowrap;
-  flex-shrink: 0;
+  min-height: 38px;
 }
 
-.filter-btn:hover { color: var(--white); border-color: var(--gray); }
-.filter-btn.active { background: var(--red); color: var(--white); border-color: var(--red); }
+@media (min-width: 768px) {
+  .filter-btn { padding: 0.55rem 1.1rem; font-size: 0.825rem; }
+}
 
-@media (min-width: 769px) {
-  .filters { flex-wrap: wrap; overflow: visible; margin: 0; padding: 0; }
+.filter-btn:hover {
+  color: var(--white);
+  border-color: var(--gray);
+}
+
+.filter-btn.active {
+  background: var(--red);
+  color: var(--white);
+  border-color: var(--red);
 }
 
 .cars-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+  grid-template-columns: 1fr;
   gap: 1.25rem;
 }
 
 @media (min-width: 600px) {
-  .cars-grid { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
+  .cars-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .cars-grid { grid-template-columns: repeat(3, 1fr); }
 }
 
 .car-card {
@@ -667,34 +838,55 @@ section { padding: var(--section-pad-y) 0; position: relative; }
   top: 0.85rem;
   left: 0.85rem;
   display: flex;
-  gap: 0.5rem;
+  gap: 0.4rem;
   z-index: 2;
   flex-wrap: wrap;
   max-width: calc(100% - 1.7rem);
 }
 
 .badge {
-  padding: 0.35rem 0.7rem;
+  padding: 0.3rem 0.65rem;
   font-family: 'Montserrat', sans-serif;
-  font-size: 0.68rem;
+  font-size: 0.65rem;
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   border-radius: 4px;
   backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
 }
 
-.badge-year { background: rgba(0, 0, 0, 0.7); color: var(--white); border: 1px solid rgba(255,255,255,0.15); }
-.badge-new { background: var(--red); color: var(--white); }
-.badge-featured { background: rgba(220, 31, 31, 0.15); color: var(--red); border: 1px solid var(--red); }
+@media (min-width: 768px) {
+  .badge { padding: 0.35rem 0.75rem; font-size: 0.7rem; }
+}
 
-.car-body { padding: 1.25rem; display: flex; flex-direction: column; flex: 1; }
+.badge-year {
+  background: rgba(0, 0, 0, 0.7);
+  color: var(--white);
+  border: 1px solid rgba(255,255,255,0.15);
+}
 
-@media (min-width: 600px) { .car-body { padding: 1.5rem; } }
+.badge-new {
+  background: var(--red);
+  color: var(--white);
+}
+
+.badge-featured {
+  background: rgba(220, 31, 31, 0.15);
+  color: var(--red);
+  border: 1px solid var(--red);
+}
+
+.car-body {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+@media (min-width: 768px) { .car-body { padding: 1.5rem; } }
 
 .car-brand {
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   color: var(--gray);
   text-transform: uppercase;
   letter-spacing: 0.15em;
@@ -712,7 +904,7 @@ section { padding: var(--section-pad-y) 0; position: relative; }
   line-height: 1.2;
 }
 
-@media (min-width: 600px) { .car-model { font-size: 1.35rem; } }
+@media (min-width: 768px) { .car-model { font-size: 1.35rem; } }
 
 .car-specs {
   display: flex;
@@ -723,15 +915,26 @@ section { padding: var(--section-pad-y) 0; position: relative; }
   flex-wrap: wrap;
 }
 
+@media (min-width: 768px) {
+  .car-specs { gap: 1rem; margin-bottom: 1.25rem; padding-bottom: 1.25rem; }
+}
+
 .car-spec {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
   font-size: 0.78rem;
   color: var(--gray-light);
 }
 
-.car-spec svg { width: 14px; height: 14px; color: var(--gray); flex-shrink: 0; }
+@media (min-width: 768px) { .car-spec { font-size: 0.8rem; } }
+
+.car-spec svg {
+  width: 14px;
+  height: 14px;
+  color: var(--gray);
+  flex-shrink: 0;
+}
 
 .car-footer {
   display: flex;
@@ -742,25 +945,32 @@ section { padding: var(--section-pad-y) 0; position: relative; }
 }
 
 .car-price { display: flex; flex-direction: column; min-width: 0; }
+
 .car-price .label {
-  font-size: 0.68rem;
+  font-size: 0.65rem;
   color: var(--gray);
   text-transform: uppercase;
   letter-spacing: 0.1em;
 }
 
+@media (min-width: 768px) { .car-price .label { font-size: 0.7rem; } }
+
 .car-price .amount {
   font-family: 'Montserrat', sans-serif;
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   font-weight: 800;
   color: var(--white);
   line-height: 1.1;
   white-space: nowrap;
 }
 
-@media (min-width: 600px) { .car-price .amount { font-size: 1.25rem; } }
+@media (min-width: 768px) { .car-price .amount { font-size: 1.25rem; } }
 
-.car-price .amount small { font-size: 0.7em; color: var(--red); font-weight: 600; }
+.car-price .amount small {
+  font-size: 0.7em;
+  color: var(--red);
+  font-weight: 600;
+}
 
 .car-cta {
   display: inline-flex;
@@ -772,56 +982,98 @@ section { padding: var(--section-pad-y) 0; position: relative; }
   border-radius: 6px;
   font-family: 'Montserrat', sans-serif;
   font-weight: 700;
-  font-size: 0.72rem;
-  letter-spacing: 0.06em;
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   transition: all var(--transition);
   white-space: nowrap;
   flex-shrink: 0;
-  min-height: 40px;
 }
 
-.car-cta:hover { background: var(--red-glow); box-shadow: 0 8px 20px -6px rgba(220,31,31,0.6); }
+@media (min-width: 768px) {
+  .car-cta {
+    padding: 0.65rem 1rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    gap: 8px;
+  }
+}
 
-.stock-cta { text-align: center; margin-top: 2.5rem; }
-.stock-cta .btn { max-width: 100%; white-space: normal; }
+.car-cta:hover {
+  background: var(--red-glow);
+  box-shadow: 0 8px 20px -6px rgba(220,31,31,0.6);
+}
+
+.stock-cta {
+  text-align: center;
+  margin-top: 2.5rem;
+}
+
+@media (min-width: 768px) { .stock-cta { margin-top: 3rem; } }
 
 /* === PRIMER AUTO === */
-.first-car { background: var(--black-2); position: relative; overflow: hidden; }
+.first-car {
+  background: var(--black-2);
+  position: relative;
+  overflow: hidden;
+}
 
 .first-car::before {
   content: '';
   position: absolute;
-  top: -50%; right: -20%;
-  width: 70%; height: 200%;
+  top: -50%;
+  right: -30%;
+  width: 80%;
+  height: 200%;
   background: radial-gradient(circle, rgba(220, 31, 31, 0.18), transparent 60%);
   pointer-events: none;
 }
 
 .first-car-grid {
   display: grid;
-  grid-template-columns: 1.1fr 1fr;
-  gap: 4rem;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
   align-items: center;
   position: relative;
   z-index: 1;
 }
 
+@media (min-width: 900px) {
+  .first-car-grid {
+    grid-template-columns: 1.1fr 1fr;
+    gap: 4rem;
+  }
+}
+
 .first-car-content h2 {
-  font-size: clamp(1.85rem, 4.8vw, 3.25rem);
+  font-size: clamp(1.85rem, 5.5vw, 3.25rem);
   text-transform: uppercase;
   margin-bottom: 1.25rem;
 }
+
+@media (min-width: 768px) {
+  .first-car-content h2 { margin-bottom: 1.5rem; }
+}
+
 .first-car-content h2 .red { color: var(--red); }
 
 .first-car-content p {
-  font-size: clamp(1rem, 2vw, 1.1rem);
+  font-size: 1rem;
   color: var(--gray-light);
   margin-bottom: 1.75rem;
   max-width: 480px;
 }
 
-.first-car-list { list-style: none; margin-bottom: 2rem; }
+@media (min-width: 768px) {
+  .first-car-content p { font-size: 1.1rem; margin-bottom: 2rem; }
+}
+
+.first-car-list {
+  list-style: none;
+  margin-bottom: 2rem;
+}
+
+@media (min-width: 768px) { .first-car-list { margin-bottom: 2.5rem; } }
 
 .first-car-list li {
   display: flex;
@@ -834,11 +1086,14 @@ section { padding: var(--section-pad-y) 0; position: relative; }
   font-size: 0.95rem;
 }
 
+@media (min-width: 768px) { .first-car-list li { font-size: 1rem; } }
+
 .first-car-list li:last-child { border-bottom: none; }
 
 .check-icon {
   flex-shrink: 0;
-  width: 26px; height: 26px;
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
   background: rgba(220, 31, 31, 0.15);
   border: 1px solid var(--red);
@@ -848,15 +1103,26 @@ section { padding: var(--section-pad-y) 0; position: relative; }
   color: var(--red);
 }
 
+@media (min-width: 768px) {
+  .check-icon { width: 28px; height: 28px; }
+}
+
 .first-car-visual {
   position: relative;
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 16 / 11;
   border-radius: 16px;
   overflow: hidden;
   background: linear-gradient(135deg, #1a1a1a, #0a0a0a);
 }
 
-.first-car-visual img { width: 100%; height: 100%; object-fit: cover; }
+@media (min-width: 900px) {
+  .first-car-visual { aspect-ratio: 4 / 5; }
+}
+
+.first-car-visual img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
 
 .first-car-visual::after {
   content: '';
@@ -874,36 +1140,38 @@ section { padding: var(--section-pad-y) 0; position: relative; }
   padding: 1rem 1.1rem;
   background: rgba(10, 10, 10, 0.85);
   backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--gray-border);
   border-radius: 12px;
   z-index: 2;
 }
 
+@media (min-width: 768px) {
+  .first-car-tag { bottom: 1.5rem; left: 1.5rem; right: 1.5rem; padding: 1.25rem; }
+}
+
 .first-car-tag .label {
-  font-size: 0.68rem;
+  font-size: 0.65rem;
   color: var(--red);
   font-weight: 700;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  margin-bottom: 0.35rem;
+  margin-bottom: 0.4rem;
+}
+
+@media (min-width: 768px) {
+  .first-car-tag .label { font-size: 0.7rem; letter-spacing: 0.15em; }
 }
 
 .first-car-tag .value {
   font-family: 'Montserrat', sans-serif;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 700;
   color: var(--white);
   line-height: 1.3;
 }
 
-@media (max-width: 900px) {
-  .first-car-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-  .first-car-visual { aspect-ratio: 4/3; max-height: 380px; }
-}
-
-@media (max-width: 480px) {
-  .first-car-content .btn { width: 100%; }
+@media (min-width: 768px) {
+  .first-car-tag .value { font-size: 1rem; }
 }
 
 /* === DIFERENCIAL === */
@@ -911,11 +1179,20 @@ section { padding: var(--section-pad-y) 0; position: relative; }
 
 .diff-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  grid-template-columns: 1fr;
   gap: 1rem;
 }
 
-@media (min-width: 600px) { .diff-grid { gap: 1.5rem; } }
+@media (min-width: 600px) {
+  .diff-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .diff-grid { grid-template-columns: repeat(4, 1fr); }
+}
 
 .diff-card {
   position: relative;
@@ -927,7 +1204,9 @@ section { padding: var(--section-pad-y) 0; position: relative; }
   overflow: hidden;
 }
 
-@media (min-width: 600px) { .diff-card { padding: 2.5rem 1.75rem 2rem; } }
+@media (min-width: 768px) {
+  .diff-card { padding: 2.5rem 1.75rem 2rem; }
+}
 
 .diff-card::before {
   content: '';
@@ -940,12 +1219,17 @@ section { padding: var(--section-pad-y) 0; position: relative; }
   transition: transform 0.4s;
 }
 
-.diff-card:hover { background: var(--black-3); border-color: var(--gray); transform: translateY(-4px); }
+.diff-card:hover {
+  background: var(--black-3);
+  border-color: var(--gray);
+  transform: translateY(-4px);
+}
+
 .diff-card:hover::before { transform: scaleX(1); }
 
 .diff-num {
   font-family: 'Montserrat', sans-serif;
-  font-size: 2.5rem;
+  font-size: 2.25rem;
   font-weight: 900;
   color: transparent;
   -webkit-text-stroke: 1.5px var(--red);
@@ -954,16 +1238,32 @@ section { padding: var(--section-pad-y) 0; position: relative; }
   letter-spacing: -0.03em;
 }
 
+@media (min-width: 768px) {
+  .diff-num { font-size: 2.75rem; margin-bottom: 1.25rem; }
+}
+
 .diff-card h3 {
   font-family: 'Montserrat', sans-serif;
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   font-weight: 800;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.65rem;
   text-transform: uppercase;
   color: var(--white);
 }
 
-.diff-card p { color: var(--gray-light); font-size: 0.92rem; line-height: 1.55; }
+@media (min-width: 768px) {
+  .diff-card h3 { font-size: 1.15rem; margin-bottom: 0.75rem; }
+}
+
+.diff-card p {
+  color: var(--gray-light);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+@media (min-width: 768px) {
+  .diff-card p { font-size: 0.94rem; }
+}
 
 /* === CTA FUERTE === */
 .cta-strong {
@@ -971,14 +1271,18 @@ section { padding: var(--section-pad-y) 0; position: relative; }
   position: relative;
   overflow: hidden;
   text-align: center;
-  padding: var(--section-pad-y) 0;
+  padding: 4rem 0;
+}
+
+@media (min-width: 768px) {
+  .cta-strong { padding: 6rem 0; }
 }
 
 .cta-strong::before {
   content: '';
   position: absolute;
   inset: 0;
-  background:
+  background: 
     radial-gradient(circle at 20% 50%, rgba(220, 31, 31, 0.4), transparent 50%),
     radial-gradient(circle at 80% 50%, rgba(220, 31, 31, 0.3), transparent 50%);
   animation: glow-shift 8s ease infinite;
@@ -993,36 +1297,60 @@ section { padding: var(--section-pad-y) 0; position: relative; }
   content: '';
   position: absolute;
   inset: 0;
-  background-image:
+  background-image: 
     linear-gradient(45deg, rgba(255,255,255,0.03) 25%, transparent 25%),
     linear-gradient(-45deg, rgba(255,255,255,0.03) 25%, transparent 25%);
-  background-size: 30px 30px;
+  background-size: 25px 25px;
   pointer-events: none;
 }
 
+@media (min-width: 768px) {
+  .cta-strong::after { background-size: 30px 30px; }
+}
+
 .cta-strong .container { position: relative; z-index: 2; }
-.cta-strong .eyebrow { color: var(--white); justify-content: center; }
+
+.cta-strong .eyebrow {
+  color: var(--white);
+  justify-content: center;
+}
+
 .cta-strong .eyebrow::before { background: var(--white); }
 
 .cta-strong h2 {
-  font-size: clamp(1.85rem, 6vw, 4.5rem);
+  font-size: clamp(1.85rem, 7vw, 4.5rem);
   text-transform: uppercase;
   font-weight: 900;
   letter-spacing: -0.025em;
   margin-bottom: 1rem;
-  line-height: 0.98;
+  line-height: 1;
 }
 
-.cta-strong h2 .italic { font-style: italic; color: rgba(255,255,255,0.6); }
+.cta-strong h2 .italic {
+  font-style: italic;
+  color: rgba(255,255,255,0.6);
+}
 
 .cta-strong p {
-  font-size: clamp(0.98rem, 2vw, 1.15rem);
+  font-size: 1rem;
   color: rgba(255,255,255,0.85);
   max-width: 600px;
   margin: 0 auto 2rem;
+  padding: 0 0.5rem;
 }
 
-.cta-strong .btn { font-size: 0.95rem; padding: 1.1rem 2.25rem; }
+@media (min-width: 768px) {
+  .cta-strong p { font-size: 1.15rem; margin-bottom: 2.5rem; }
+}
+
+.cta-strong .btn {
+  font-size: 0.9rem;
+  padding: 1.1rem 2rem;
+}
+
+@media (min-width: 768px) {
+  .cta-strong .btn { font-size: 1rem; padding: 1.25rem 2.5rem; }
+}
 
 .cta-strong .btn-primary {
   background: var(--white);
@@ -1036,21 +1364,30 @@ section { padding: var(--section-pad-y) 0; position: relative; }
   50% { box-shadow: 0 0 0 16px rgba(255,255,255,0); }
 }
 
-.cta-strong .btn-primary:hover { background: var(--white); transform: translateY(-2px) scale(1.03); }
-
-.cta-strong .secondary-text { margin-top: 1.25rem; font-size: 0.82rem; color: rgba(255,255,255,0.6); padding: 0 1rem; }
-.cta-strong .secondary-text strong { color: var(--white); }
-
-@media (max-width: 480px) {
-  .cta-strong .btn { width: 100%; max-width: 320px; }
+.cta-strong .btn-primary:hover {
+  background: var(--white);
+  transform: translateY(-2px) scale(1.03);
 }
+
+.cta-strong .secondary-text {
+  margin-top: 1.5rem;
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.6);
+  padding: 0 1rem;
+}
+
+@media (min-width: 768px) {
+  .cta-strong .secondary-text { font-size: 0.875rem; }
+}
+
+.cta-strong .secondary-text strong { color: var(--white); }
 
 /* === UBICACIÓN === */
 .location { background: var(--black); }
 
 .location-grid {
   display: grid;
-  grid-template-columns: 1fr 1.2fr;
+  grid-template-columns: 1fr;
   gap: 0;
   border: 1px solid var(--gray-border);
   border-radius: 16px;
@@ -1058,38 +1395,58 @@ section { padding: var(--section-pad-y) 0; position: relative; }
   background: var(--black-2);
 }
 
-.location-info { padding: 2rem 1.75rem; }
+@media (min-width: 900px) {
+  .location-grid { grid-template-columns: 1fr 1.2fr; }
+}
 
-@media (min-width: 600px) { .location-info { padding: 2.5rem 2rem; } }
-@media (min-width: 1000px) { .location-info { padding: 3rem 2.5rem; } }
+.location-info {
+  padding: 2rem 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .location-info { padding: 3rem 2.5rem; }
+}
 
 .location-info h3 {
   font-family: 'Montserrat', sans-serif;
-  font-size: 1.35rem;
+  font-size: 1.3rem;
   font-weight: 800;
   text-transform: uppercase;
-  margin-bottom: 1.1rem;
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+  .location-info h3 { font-size: 1.5rem; margin-bottom: 1.25rem; }
 }
 
 .location-address {
-  font-size: 1.05rem;
+  font-size: 1rem;
   color: var(--gray-light);
   margin-bottom: 1.75rem;
   line-height: 1.5;
+}
+
+@media (min-width: 768px) {
+  .location-address { font-size: 1.125rem; margin-bottom: 2rem; }
 }
 
 .location-detail {
   display: flex;
   align-items: flex-start;
   gap: 12px;
-  padding: 0.95rem 0;
+  padding: 0.9rem 0;
   border-top: 1px solid var(--gray-border);
+}
+
+@media (min-width: 768px) {
+  .location-detail { gap: 14px; padding: 1rem 0; }
 }
 
 .location-detail:last-of-type { border-bottom: 1px solid var(--gray-border); }
 
 .location-detail .icon {
-  width: 34px; height: 34px;
+  width: 34px;
+  height: 34px;
   border-radius: 8px;
   background: rgba(220, 31, 31, 0.1);
   border: 1px solid rgba(220, 31, 31, 0.3);
@@ -1100,9 +1457,12 @@ section { padding: var(--section-pad-y) 0; position: relative; }
   flex-shrink: 0;
 }
 
-.location-detail .detail-content { min-width: 0; flex: 1; }
+@media (min-width: 768px) {
+  .location-detail .icon { width: 36px; height: 36px; }
+}
+
 .location-detail .label {
-  font-size: 0.68rem;
+  font-size: 0.65rem;
   color: var(--gray);
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -1110,41 +1470,69 @@ section { padding: var(--section-pad-y) 0; position: relative; }
   margin-bottom: 2px;
 }
 
-.location-detail .value { font-weight: 600; color: var(--white); font-size: 0.95rem; word-wrap: break-word; }
+@media (min-width: 768px) {
+  .location-detail .label { font-size: 0.7rem; }
+}
+
+.location-detail .value {
+  font-weight: 600;
+  color: var(--white);
+  font-size: 0.95rem;
+  word-break: break-word;
+}
+
 .location-detail .value a:hover { color: var(--red); transition: color var(--transition); }
 
-.location-info .btn { margin-top: 1.25rem; width: 100%; }
+.location-info .btn { margin-top: 1.25rem; }
 
-@media (min-width: 600px) { .location-info .btn { width: auto; } }
+@media (min-width: 768px) {
+  .location-info .btn { margin-top: 1.5rem; }
+}
 
-.location-map { position: relative; min-height: 320px; background: var(--black-3); }
+.location-map {
+  position: relative;
+  min-height: 320px;
+  background: var(--black-3);
+}
+
+@media (min-width: 768px) {
+  .location-map { min-height: 480px; }
+}
 
 .location-map iframe {
-  width: 100%; height: 100%;
+  width: 100%;
+  height: 100%;
   border: 0;
   filter: invert(0.92) hue-rotate(180deg) brightness(0.85) contrast(0.95);
 }
 
-@media (min-width: 600px) { .location-map { min-height: 400px; } }
-
-@media (max-width: 900px) {
-  .location-grid { grid-template-columns: 1fr; }
+/* === CONTACTO + HORARIOS === */
+.contact-section {
+  background: var(--black-2);
+  border-top: 1px solid var(--gray-border);
 }
 
-/* === CONTACTO + HORARIOS === */
-.contact-section { background: var(--black-2); border-top: 1px solid var(--gray-border); }
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+}
 
-.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; }
-
-@media (max-width: 768px) { .contact-grid { grid-template-columns: 1fr; gap: 2rem; } }
+@media (min-width: 768px) {
+  .contact-grid { grid-template-columns: 1fr 1fr; gap: 3rem; }
+}
 
 .contact-block h3 {
   font-family: 'Montserrat', sans-serif;
-  font-size: 1.35rem;
+  font-size: 1.3rem;
   font-weight: 800;
   text-transform: uppercase;
   margin-bottom: 1.25rem;
   color: var(--white);
+}
+
+@media (min-width: 768px) {
+  .contact-block h3 { font-size: 1.5rem; margin-bottom: 1.5rem; }
 }
 
 .contact-block h3 .red { color: var(--red); }
@@ -1163,7 +1551,18 @@ section { padding: var(--section-pad-y) 0; position: relative; }
   transition: all var(--transition);
 }
 
-.contact-item:hover { border-color: var(--red); transform: translateX(4px); }
+@media (min-width: 768px) {
+  .contact-item {
+    gap: 14px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 0.75rem;
+  }
+}
+
+.contact-item:hover {
+  border-color: var(--red);
+  transform: translateX(4px);
+}
 
 .contact-item .icon {
   width: 36px; height: 36px;
@@ -1176,22 +1575,33 @@ section { padding: var(--section-pad-y) 0; position: relative; }
   flex-shrink: 0;
 }
 
+@media (min-width: 768px) {
+  .contact-item .icon { width: 38px; height: 38px; }
+}
+
 .contact-item .text { flex: 1; min-width: 0; }
+
 .contact-item .label {
-  font-size: 0.68rem;
+  font-size: 0.65rem;
   color: var(--gray);
   text-transform: uppercase;
   letter-spacing: 0.1em;
   margin-bottom: 2px;
 }
 
+@media (min-width: 768px) {
+  .contact-item .label { font-size: 0.7rem; }
+}
+
 .contact-item .value {
   font-weight: 600;
   color: var(--white);
-  font-size: 0.92rem;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  font-size: 0.9rem;
+  word-break: break-word;
+}
+
+@media (min-width: 768px) {
+  .contact-item .value { font-size: 1rem; }
 }
 
 .contact-item a { transition: color var(--transition); }
@@ -1204,25 +1614,46 @@ section { padding: var(--section-pad-y) 0; position: relative; }
   justify-content: space-between;
   align-items: center;
   padding: 0.85rem 1rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.65rem;
   background: var(--black);
   border: 1px solid var(--gray-border);
   border-radius: 8px;
   gap: 1rem;
 }
 
-.hours-item.today { border-color: var(--red); background: rgba(220, 31, 31, 0.05); }
+@media (min-width: 768px) {
+  .hours-item { padding: 1rem 1.25rem; margin-bottom: 0.75rem; }
+}
+
+.hours-item.today {
+  border-color: var(--red);
+  background: rgba(220, 31, 31, 0.05);
+}
 
 .hours-day {
   font-family: 'Montserrat', sans-serif;
   font-weight: 700;
-  font-size: 0.9rem;
+  font-size: 0.875rem;
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
 
+@media (min-width: 768px) {
+  .hours-day { font-size: 0.95rem; }
+}
+
 .hours-item.today .hours-day { color: var(--red); }
-.hours-time { font-weight: 500; color: var(--gray-light); font-variant-numeric: tabular-nums; font-size: 0.9rem; white-space: nowrap; }
+
+.hours-time {
+  font-weight: 500;
+  color: var(--gray-light);
+  font-variant-numeric: tabular-nums;
+  font-size: 0.875rem;
+  white-space: nowrap;
+}
+
+@media (min-width: 768px) { .hours-time { font-size: 1rem; } }
+
 .hours-item.closed .hours-time { color: var(--gray); }
 
 .hours-status {
@@ -1234,9 +1665,13 @@ section { padding: var(--section-pad-y) 0; position: relative; }
   border: 1px solid rgba(34, 197, 94, 0.3);
   border-radius: 100px;
   margin-top: 1rem;
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   font-weight: 600;
   color: #22c55e;
+}
+
+@media (min-width: 768px) {
+  .hours-status { font-size: 0.85rem; }
 }
 
 .hours-status.closed {
@@ -1258,23 +1693,40 @@ section { padding: var(--section-pad-y) 0; position: relative; }
   background: var(--black);
   border-top: 1px solid var(--gray-border);
   padding: 2.5rem 0 1.75rem;
-  padding-bottom: max(1.75rem, env(safe-area-inset-bottom));
+}
+
+@media (min-width: 768px) {
+  .footer { padding: 3rem 0 2rem; }
 }
 
 .footer-top {
   display: grid;
-  grid-template-columns: 1.5fr 1fr 1fr;
-  gap: 2.5rem;
+  grid-template-columns: 1fr;
+  gap: 2rem;
   margin-bottom: 2rem;
   padding-bottom: 2rem;
   border-bottom: 1px solid var(--gray-border);
 }
 
-.footer-brand p { color: var(--gray); margin-top: 1rem; max-width: 320px; font-size: 0.9rem; }
+@media (min-width: 768px) {
+  .footer-top {
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 2.5rem;
+    padding-bottom: 2.5rem;
+  }
+}
+
+.footer-brand p {
+  color: var(--gray);
+  margin-top: 1rem;
+  max-width: 320px;
+  font-size: 0.9rem;
+}
 
 .footer h4 {
   font-family: 'Montserrat', sans-serif;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.12em;
@@ -1284,13 +1736,21 @@ section { padding: var(--section-pad-y) 0; position: relative; }
 
 .footer ul { list-style: none; }
 .footer ul li { margin-bottom: 0.5rem; }
-.footer ul a { font-size: 0.88rem; color: var(--gray-light); transition: color var(--transition); }
+.footer ul a {
+  font-size: 0.9rem;
+  color: var(--gray-light);
+  transition: color var(--transition);
+}
 .footer ul a:hover { color: var(--red); }
 
-.footer-socials { display: flex; gap: 0.75rem; margin-top: 1.25rem; }
+.footer-socials {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
 
 .footer-socials a {
-  width: 38px; height: 38px;
+  width: 40px; height: 40px;
   border-radius: 50%;
   background: var(--black-2);
   border: 1px solid var(--gray-border);
@@ -1301,34 +1761,39 @@ section { padding: var(--section-pad-y) 0; position: relative; }
   transition: all var(--transition);
 }
 
-.footer-socials a:hover { background: var(--red); border-color: var(--red); color: var(--white); transform: translateY(-2px); }
+.footer-socials a:hover {
+  background: var(--red);
+  border-color: var(--red);
+  color: var(--white);
+  transform: translateY(-2px);
+}
 
 .footer-bottom {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  font-size: 0.82rem;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 0.8rem;
   color: var(--gray);
+}
+
+@media (min-width: 600px) {
+  .footer-bottom {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    font-size: 0.85rem;
+  }
 }
 
 .footer-bottom strong { color: var(--white); font-weight: 600; }
 
-@media (max-width: 768px) {
-  .footer-top { grid-template-columns: 1fr 1fr; gap: 2rem 1.5rem; }
-  .footer-brand { grid-column: 1 / -1; }
-}
-
-@media (max-width: 480px) {
-  .footer-top { grid-template-columns: 1fr; gap: 1.75rem; }
-}
-
-/* === FAB WHATSAPP === */
+/* === FLOATING WHATSAPP === */
 .fab {
   position: fixed;
-  bottom: max(1.25rem, env(safe-area-inset-bottom));
-  right: 1.25rem;
+  bottom: 1rem;
+  right: 1rem;
   z-index: 90;
   width: 56px; height: 56px;
   background: #25D366;
@@ -1342,6 +1807,10 @@ section { padding: var(--section-pad-y) 0; position: relative; }
   animation: pulse-fab 2.5s ease infinite;
 }
 
+@media (min-width: 768px) {
+  .fab { width: 60px; height: 60px; bottom: 1.5rem; right: 1.5rem; }
+}
+
 @keyframes pulse-fab {
   0%, 100% { box-shadow: 0 12px 32px -8px rgba(37, 211, 102, 0.5), 0 0 0 0 rgba(37, 211, 102, 0.4); }
   50% { box-shadow: 0 12px 32px -8px rgba(37, 211, 102, 0.5), 0 0 0 18px rgba(37, 211, 102, 0); }
@@ -1350,18 +1819,23 @@ section { padding: var(--section-pad-y) 0; position: relative; }
 .fab:hover { transform: scale(1.1); }
 .fab svg { width: 26px; height: 26px; }
 
-@media (min-width: 600px) {
-  .fab { width: 60px; height: 60px; bottom: 1.5rem; right: 1.5rem; }
-  .fab svg { width: 28px; height: 28px; }
-}
+@media (min-width: 768px) { .fab svg { width: 28px; height: 28px; } }
 
 /* === Reveal === */
-.reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.25, 1, 0.5, 1); }
-.reveal.in { opacity: 1; transform: translateY(0); }
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.reveal.in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .reveal.delay-1 { transition-delay: 0.08s; }
 .reveal.delay-2 { transition-delay: 0.16s; }
 .reveal.delay-3 { transition-delay: 0.24s; }
-.reveal.delay-4 { transition-delay: 0.32s; }
 
 ::selection { background: var(--red); color: var(--white); }
 
@@ -1397,11 +1871,12 @@ section { padding: var(--section-pad-y) 0; position: relative; }
       Consultar
     </a>
     <button class="nav-toggle" id="navToggle" aria-label="Menú">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
     </button>
   </div>
 </nav>
 
+<!-- Mobile menu -->
 <div class="mobile-menu" id="mobileMenu">
   <a href="#stock" data-close>Stock</a>
   <a href="#primer-auto" data-close>Primer Auto</a>
@@ -1427,11 +1902,14 @@ section { padding: var(--section-pad-y) 0; position: relative; }
     </div>
 
     <h1>
-      Tu próximo <span class="italic">auto está</span> <span class="accent">en Bustelo.</span>
+      Tu próximo<br>
+      <span class="italic">auto está</span><br>
+      <span class="accent">en Bustelo.</span>
     </h1>
 
     <p class="lead">
-      Usados seleccionados y 0KM listos para entrega inmediata. Asesoramiento real, precios competitivos y la confianza de una concesionaria con historia en Flores.
+      Usados seleccionados y 0KM listos para entrega inmediata.
+      Asesoramiento real, precios competitivos y la confianza de una concesionaria con historia en Flores.
     </p>
 
     <div class="hero-buttons">
@@ -1441,7 +1919,7 @@ section { padding: var(--section-pad-y) 0; position: relative; }
       </a>
       <a class="btn btn-secondary" href="https://wa.me/541155125391?text=Hola,%20vi%20la%20web%20y%20quiero%20consultar%20por%20un%20auto" target="_blank" rel="noopener">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413"/></svg>
-        Consultar WhatsApp
+        Consultar por WhatsApp
       </a>
     </div>
 
@@ -1452,7 +1930,7 @@ section { padding: var(--section-pad-y) 0; position: relative; }
       </div>
       <div class="hero-stat">
         <div class="num">+3K</div>
-        <div class="label">Clientes felices</div>
+        <div class="label">Clientes satisfechos</div>
       </div>
       <div class="hero-stat">
         <div class="num">0KM</div>
@@ -1465,10 +1943,6 @@ section { padding: var(--section-pad-y) 0; position: relative; }
 </section>
 
 <!-- ============ STOCK ============ -->
-<!--
-IMPORTANTE: Las imágenes son placeholders de Unsplash que respetan el body type
-(SUV, sedán, hatchback). Reemplazar por fotos reales del stock cuando estén disponibles.
--->
 <section class="stock" id="stock">
   <div class="container">
     <div class="section-header between reveal">
@@ -1482,19 +1956,18 @@ IMPORTANTE: Las imágenes son placeholders de Unsplash que respetan el body type
         <button class="filter-btn" data-filter="0km">0 KM</button>
         <button class="filter-btn" data-filter="usados">Usados</button>
         <button class="filter-btn" data-filter="suv">SUV</button>
-        <button class="filter-btn" data-filter="sedan">Sedán</button>
       </div>
     </div>
 
     <div class="cars-grid" id="carsGrid">
-      <!-- VW Taos - SUV compacto -->
+      <!-- Card 1: Volkswagen Taos -->
       <article class="car-card reveal" data-category="0km suv">
         <div class="car-image">
           <div class="car-badges">
             <span class="badge badge-new">0 KM</span>
             <span class="badge badge-featured">Destacado</span>
           </div>
-          <img src="https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=800&q=80&auto=format&fit=crop" alt="Volkswagen Taos SUV" loading="lazy">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/2022_Volkswagen_Taos_S%2C_Front_Right%2C_07-25-2022.jpg/1200px-2022_Volkswagen_Taos_S%2C_Front_Right%2C_07-25-2022.jpg" alt="Volkswagen Taos Comfortline 2024" loading="lazy">
         </div>
         <div class="car-body">
           <div class="car-brand">Volkswagen</div>
@@ -1511,19 +1984,19 @@ IMPORTANTE: Las imágenes son placeholders de Unsplash que respetan el body type
             </div>
             <a class="car-cta" href="https://wa.me/541155125391?text=Hola,%20me%20interesa%20el%20Volkswagen%20Taos%202024" target="_blank" rel="noopener">
               Consultar
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </a>
           </div>
         </div>
       </article>
 
-      <!-- Toyota Corolla - Sedán mediano -->
-      <article class="car-card reveal delay-1" data-category="usados sedan">
+      <!-- Card 2: Toyota Corolla -->
+      <article class="car-card reveal delay-1" data-category="usados">
         <div class="car-image">
           <div class="car-badges">
             <span class="badge badge-year">Bajo km</span>
           </div>
-          <img src="https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?w=800&q=80&auto=format&fit=crop" alt="Toyota Corolla sedán" loading="lazy">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/2022_Toyota_Corolla_LE%2C_front_left%2C_06-29-2024.jpg/1200px-2022_Toyota_Corolla_LE%2C_front_left%2C_06-29-2024.jpg" alt="Toyota Corolla XEi 2.0 2022" loading="lazy">
         </div>
         <div class="car-body">
           <div class="car-brand">Toyota</div>
@@ -1540,19 +2013,19 @@ IMPORTANTE: Las imágenes son placeholders de Unsplash que respetan el body type
             </div>
             <a class="car-cta" href="https://wa.me/541155125391?text=Hola,%20me%20interesa%20el%20Toyota%20Corolla%202022" target="_blank" rel="noopener">
               Consultar
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </a>
           </div>
         </div>
       </article>
 
-      <!-- Ford EcoSport - SUV pequeño -->
+      <!-- Card 3: Ford EcoSport -->
       <article class="car-card reveal delay-2" data-category="usados suv">
         <div class="car-image">
           <div class="car-badges">
             <span class="badge badge-featured">Único dueño</span>
           </div>
-          <img src="https://images.unsplash.com/photo-1568844293986-8d0400bd4745?w=800&q=80&auto=format&fit=crop" alt="Ford EcoSport SUV compacto" loading="lazy">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/2018_Ford_EcoSport_Titanium_1.0_Front.jpg/1200px-2018_Ford_EcoSport_Titanium_1.0_Front.jpg" alt="Ford EcoSport SE 1.5 2020" loading="lazy">
         </div>
         <div class="car-body">
           <div class="car-brand">Ford</div>
@@ -1569,19 +2042,19 @@ IMPORTANTE: Las imágenes son placeholders de Unsplash que respetan el body type
             </div>
             <a class="car-cta" href="https://wa.me/541155125391?text=Hola,%20me%20interesa%20la%20Ford%20EcoSport%202020" target="_blank" rel="noopener">
               Consultar
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </a>
           </div>
         </div>
       </article>
 
-      <!-- Chevrolet Onix - Hatchback -->
+      <!-- Card 4: Chevrolet Onix -->
       <article class="car-card reveal" data-category="0km">
         <div class="car-image">
           <div class="car-badges">
             <span class="badge badge-new">0 KM</span>
           </div>
-          <img src="https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=800&q=80&auto=format&fit=crop" alt="Chevrolet Onix hatchback" loading="lazy">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/2020_Chevrolet_Onix_LT_1.0_Front.jpg/1200px-2020_Chevrolet_Onix_LT_1.0_Front.jpg" alt="Chevrolet Onix LT 1.2 2024" loading="lazy">
         </div>
         <div class="car-body">
           <div class="car-brand">Chevrolet</div>
@@ -1598,19 +2071,19 @@ IMPORTANTE: Las imágenes son placeholders de Unsplash que respetan el body type
             </div>
             <a class="car-cta" href="https://wa.me/541155125391?text=Hola,%20me%20interesa%20el%20Chevrolet%20Onix%202024" target="_blank" rel="noopener">
               Consultar
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </a>
           </div>
         </div>
       </article>
 
-      <!-- Fiat Cronos - Sedán compacto -->
-      <article class="car-card reveal delay-1" data-category="usados sedan">
+      <!-- Card 5: Fiat Cronos -->
+      <article class="car-card reveal delay-1" data-category="usados">
         <div class="car-image">
           <div class="car-badges">
             <span class="badge badge-featured">Recién ingresado</span>
           </div>
-          <img src="https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=800&q=80&auto=format&fit=crop" alt="Fiat Cronos sedán compacto" loading="lazy">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/2018_Fiat_Cronos_Drive_1.3.jpg/1200px-2018_Fiat_Cronos_Drive_1.3.jpg" alt="Fiat Cronos Drive 1.3 2023" loading="lazy">
         </div>
         <div class="car-body">
           <div class="car-brand">Fiat</div>
@@ -1627,19 +2100,19 @@ IMPORTANTE: Las imágenes son placeholders de Unsplash que respetan el body type
             </div>
             <a class="car-cta" href="https://wa.me/541155125391?text=Hola,%20me%20interesa%20el%20Fiat%20Cronos%202023" target="_blank" rel="noopener">
               Consultar
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </a>
           </div>
         </div>
       </article>
 
-      <!-- Renault Sandero Stepway - Hatchback aventurero -->
+      <!-- Card 6: Renault Sandero Stepway -->
       <article class="car-card reveal delay-2" data-category="usados">
         <div class="car-image">
           <div class="car-badges">
             <span class="badge badge-year">Oportunidad</span>
           </div>
-          <img src="https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?w=800&q=80&auto=format&fit=crop" alt="Renault Sandero Stepway hatchback" loading="lazy">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/2017_Renault_Sandero_Stepway_Front.jpg/1200px-2017_Renault_Sandero_Stepway_Front.jpg" alt="Renault Sandero Stepway 1.6 2019" loading="lazy">
         </div>
         <div class="car-body">
           <div class="car-brand">Renault</div>
@@ -1656,7 +2129,7 @@ IMPORTANTE: Las imágenes son placeholders de Unsplash que respetan el body type
             </div>
             <a class="car-cta" href="https://wa.me/541155125391?text=Hola,%20me%20interesa%20el%20Renault%20Sandero%20Stepway%202019" target="_blank" rel="noopener">
               Consultar
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </a>
           </div>
         </div>
@@ -1665,7 +2138,7 @@ IMPORTANTE: Las imágenes son placeholders de Unsplash que respetan el body type
 
     <div class="stock-cta reveal">
       <a class="btn btn-secondary" href="https://wa.me/541155125391?text=Hola,%20quiero%20ver%20todo%20el%20stock%20disponible" target="_blank" rel="noopener">
-        Ver stock completo
+        Ver stock completo por WhatsApp
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </a>
     </div>
@@ -1683,31 +2156,31 @@ IMPORTANTE: Las imágenes son placeholders de Unsplash que respetan el body type
 
         <ul class="first-car-list">
           <li>
-            <span class="check-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>
+            <span class="check-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>
             Opciones desde USD 8.000
           </li>
           <li>
-            <span class="check-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>
+            <span class="check-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>
             Financiación a medida
           </li>
           <li>
-            <span class="check-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>
+            <span class="check-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>
             Recibimos tu auto en parte de pago
           </li>
           <li>
-            <span class="check-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>
+            <span class="check-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>
             Te explicamos cada paso del proceso
           </li>
         </ul>
 
         <a class="btn btn-primary" href="https://wa.me/541155125391?text=Hola,%20estoy%20buscando%20mi%20primer%20auto%20y%20quiero%20que%20me%20asesoren" target="_blank" rel="noopener">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413"/></svg>
           Hablar por WhatsApp
         </a>
       </div>
 
       <div class="first-car-visual reveal delay-2">
-        <img src="https://images.unsplash.com/photo-1542362567-b07e54358753?w=800&q=80&auto=format&fit=crop" alt="Tu primer auto">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/2014_Volkswagen_Gol_Trend_1.6.jpg/1200px-2014_Volkswagen_Gol_Trend_1.6.jpg" alt="Tu primer auto - Volkswagen Gol Trend">
         <div class="first-car-tag">
           <div class="label">Pensado para vos</div>
           <div class="value">Te llevás tu primer auto en menos de 24 hs.</div>
@@ -1757,7 +2230,7 @@ IMPORTANTE: Las imágenes son placeholders de Unsplash que respetan el body type
     <h2 class="reveal">Encontrá tu próximo auto<br><span class="italic">hoy mismo.</span></h2>
     <p class="reveal delay-1">Escribinos por WhatsApp y un asesor te responde en el momento. Te buscamos el auto que necesitás según tu presupuesto.</p>
     <a class="btn btn-primary reveal delay-2" href="https://wa.me/541155125391?text=Hola,%20quiero%20encontrar%20mi%20pr%C3%B3ximo%20auto%20hoy%20mismo" target="_blank" rel="noopener">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347"/></svg>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413"/></svg>
       Escribinos Ahora
     </a>
     <p class="secondary-text reveal delay-3">Respuesta en minutos · Lun a Vie de <strong>10 a 19hs</strong> · Sáb de <strong>10 a 16hs</strong></p>
@@ -1783,9 +2256,9 @@ IMPORTANTE: Las imágenes son placeholders de Unsplash que respetan el body type
 
         <div class="location-detail">
           <div class="icon">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
           </div>
-          <div class="detail-content">
+          <div>
             <div class="label">Teléfono</div>
             <div class="value"><a href="tel:+541155125391">11 5512-5391</a></div>
           </div>
@@ -1793,9 +2266,9 @@ IMPORTANTE: Las imágenes son placeholders de Unsplash que respetan el body type
 
         <div class="location-detail">
           <div class="icon">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
           </div>
-          <div class="detail-content">
+          <div>
             <div class="label">Horarios</div>
             <div class="value">Lun-Vie 10:00–19:00 · Sáb 10:00–16:00</div>
           </div>
@@ -1828,7 +2301,7 @@ IMPORTANTE: Las imágenes son placeholders de Unsplash que respetan el body type
         <ul class="contact-list">
           <li class="contact-item">
             <div class="icon">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347"/></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347"/></svg>
             </div>
             <div class="text">
               <div class="label">WhatsApp</div>
@@ -1837,7 +2310,7 @@ IMPORTANTE: Las imágenes son placeholders de Unsplash que respetan el body type
           </li>
           <li class="contact-item">
             <div class="icon">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
             </div>
             <div class="text">
               <div class="label">Teléfono fijo</div>
@@ -1846,7 +2319,7 @@ IMPORTANTE: Las imágenes son placeholders de Unsplash que respetan el body type
           </li>
           <li class="contact-item">
             <div class="icon">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
             </div>
             <div class="text">
               <div class="label">Email</div>
@@ -1855,7 +2328,7 @@ IMPORTANTE: Las imágenes son placeholders de Unsplash que respetan el body type
           </li>
           <li class="contact-item">
             <div class="icon">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
             </div>
             <div class="text">
               <div class="label">Instagram</div>
@@ -1868,13 +2341,34 @@ IMPORTANTE: Las imágenes son placeholders de Unsplash que respetan el body type
       <div class="contact-block reveal delay-1">
         <h3>Horarios<span class="red">.</span></h3>
         <ul class="hours-list" id="hoursList">
-          <li class="hours-item" data-day="1"><span class="hours-day">Lunes</span><span class="hours-time">10:00 – 19:00</span></li>
-          <li class="hours-item" data-day="2"><span class="hours-day">Martes</span><span class="hours-time">10:00 – 19:00</span></li>
-          <li class="hours-item" data-day="3"><span class="hours-day">Miércoles</span><span class="hours-time">10:00 – 19:00</span></li>
-          <li class="hours-item" data-day="4"><span class="hours-day">Jueves</span><span class="hours-time">10:00 – 19:00</span></li>
-          <li class="hours-item" data-day="5"><span class="hours-day">Viernes</span><span class="hours-time">10:00 – 19:00</span></li>
-          <li class="hours-item" data-day="6"><span class="hours-day">Sábado</span><span class="hours-time">10:00 – 16:00</span></li>
-          <li class="hours-item closed" data-day="0"><span class="hours-day">Domingo</span><span class="hours-time">Cerrado</span></li>
+          <li class="hours-item" data-day="1">
+            <span class="hours-day">Lunes</span>
+            <span class="hours-time">10:00 – 19:00</span>
+          </li>
+          <li class="hours-item" data-day="2">
+            <span class="hours-day">Martes</span>
+            <span class="hours-time">10:00 – 19:00</span>
+          </li>
+          <li class="hours-item" data-day="3">
+            <span class="hours-day">Miércoles</span>
+            <span class="hours-time">10:00 – 19:00</span>
+          </li>
+          <li class="hours-item" data-day="4">
+            <span class="hours-day">Jueves</span>
+            <span class="hours-time">10:00 – 19:00</span>
+          </li>
+          <li class="hours-item" data-day="5">
+            <span class="hours-day">Viernes</span>
+            <span class="hours-time">10:00 – 19:00</span>
+          </li>
+          <li class="hours-item" data-day="6">
+            <span class="hours-day">Sábado</span>
+            <span class="hours-time">10:00 – 16:00</span>
+          </li>
+          <li class="hours-item closed" data-day="0">
+            <span class="hours-day">Domingo</span>
+            <span class="hours-time">Cerrado</span>
+          </li>
         </ul>
         <div class="hours-status" id="hoursStatus">
           <span class="dot"></span>
@@ -1900,10 +2394,10 @@ IMPORTANTE: Las imágenes son placeholders de Unsplash que respetan el body type
         <p>Concesionaria con más de 19 años en Flores. Usados y 0KM con respaldo, asesoramiento y entrega rápida.</p>
         <div class="footer-socials">
           <a href="https://instagram.com/busteloautomotores" target="_blank" rel="noopener" aria-label="Instagram">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
           </a>
           <a href="https://wa.me/541155125391" target="_blank" rel="noopener" aria-label="WhatsApp">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413"/></svg>
           </a>
         </div>
       </div>
@@ -1936,11 +2430,13 @@ IMPORTANTE: Las imágenes son placeholders de Unsplash que respetan el body type
   </div>
 </footer>
 
+<!-- Floating WhatsApp -->
 <a class="fab" href="https://wa.me/541155125391?text=Hola,%20vi%20la%20web%20y%20quiero%20consultar%20por%20un%20auto" target="_blank" rel="noopener" aria-label="WhatsApp">
   <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413"/></svg>
 </a>
 
 <script>
+// ===== Sticky nav =====
 const nav = document.getElementById('nav');
 const onScroll = () => {
   if (window.scrollY > 30) nav.classList.add('scrolled');
@@ -1949,6 +2445,7 @@ const onScroll = () => {
 window.addEventListener('scroll', onScroll, { passive: true });
 onScroll();
 
+// ===== Mobile menu =====
 const navToggle = document.getElementById('navToggle');
 const mobileMenu = document.getElementById('mobileMenu');
 navToggle?.addEventListener('click', () => {
@@ -1962,6 +2459,7 @@ mobileMenu.querySelectorAll('[data-close]').forEach(el => {
   });
 });
 
+// ===== Reveal on scroll =====
 const io = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
@@ -1973,6 +2471,7 @@ const io = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
+// ===== Filtros stock =====
 const filterBtns = document.querySelectorAll('.filter-btn');
 const cards = document.querySelectorAll('.car-card');
 
@@ -1989,6 +2488,7 @@ filterBtns.forEach(btn => {
   });
 });
 
+// ===== Estado horarios + día actual =====
 function updateHoursStatus() {
   const now = new Date();
   const day = now.getDay();
