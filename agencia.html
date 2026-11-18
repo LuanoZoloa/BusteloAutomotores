@@ -14,28 +14,28 @@
   <script src="assets/js/tailwind.config.js"></script>
   <link rel="stylesheet" href="assets/css/styles.css" />
 </head>
-<body data-page="agencia" class="bg-ink font-sans text-bone selection:bg-champagne selection:text-ink">
+<body data-page="agencia" class="bg-ink font-sans text-bone selection:bg-accent selection:text-ink">
   <div id="site-header"></div>
 
   <main class="pt-36 md:pt-44">
     <!-- ═══ ENCABEZADO + HISTORIA ═══ -->
     <section class="mx-auto max-w-7xl px-5 md:px-10">
-      <p class="reveal mb-4 text-[11px] uppercase tracking-eyebrow text-champagne">La agencia</p>
-      <h1 class="reveal font-serif text-6xl leading-[.9] md:text-8xl">Si no lo compraríamos,<br /><em class="text-bone/70">no lo vendemos.</em></h1>
+      <p class="reveal mb-4 text-[11px] uppercase tracking-eyebrow text-accent">La agencia</p>
+      <h1 class="reveal font-serif text-6xl leading-[.9] md:text-8xl">Si no lo compraríamos,<br /><span class="text-bone/70">no lo vendemos.</span></h1>
 
       <div class="mt-20 grid gap-12 lg:grid-cols-12">
         <div class="reveal lg:col-span-7">
           <div class="media relative overflow-hidden rounded-3xl border border-white/[.06] bg-smoke">
-            <div class="absolute inset-0 grid place-items-center bg-[radial-gradient(80%_80%_at_70%_20%,#222,#111)]"><span class="font-serif text-6xl italic text-white/10" data-cfg="nombre"></span></div>
+            <div class="absolute inset-0 grid place-items-center bg-[radial-gradient(80%_80%_at_70%_20%,#222,#111)]"><span class="font-serif text-6xl  text-white/10" data-cfg="nombre"></span></div>
             <img src="img/agencia/salon.jpg" alt="Salón de la agencia" loading="lazy" class="relative aspect-[4/3] w-full object-cover" onerror="this.classList.add('is-broken')" />
           </div>
         </div>
         <div class="reveal flex flex-col justify-between gap-12 lg:col-span-5">
           <div id="historia" class="space-y-5 text-[15px] leading-relaxed text-mute [&>p:first-child]:font-serif [&>p:first-child]:text-3xl [&>p:first-child]:leading-snug [&>p:first-child]:text-bone"></div>
           <div class="grid grid-cols-3 gap-6 border-t border-white/[.06] pt-8">
-            <div><p class="font-serif text-4xl"><span data-count="years">0</span><span class="text-champagne">+</span></p><p class="mt-1 text-[11px] uppercase tracking-eyebrow text-mute">Años</p></div>
-            <div><p class="font-serif text-4xl"><span data-count="sold">0</span><span class="text-champagne">+</span></p><p class="mt-1 text-[11px] uppercase tracking-eyebrow text-mute">Operaciones</p></div>
-            <div><p class="font-serif text-4xl"><span data-count="rating" data-decimals="1">0</span><span class="text-champagne">★</span></p><p class="mt-1 text-[11px] uppercase tracking-eyebrow text-mute">Google</p></div>
+            <div><p class="font-serif text-4xl"><span data-count="years">0</span><span class="text-accent">+</span></p><p class="mt-1 text-[11px] uppercase tracking-eyebrow text-mute">Años</p></div>
+            <div><p class="font-serif text-4xl"><span data-count="sold">0</span><span class="text-accent">+</span></p><p class="mt-1 text-[11px] uppercase tracking-eyebrow text-mute">Operaciones</p></div>
+            <div><p class="font-serif text-4xl"><span data-count="rating" data-decimals="1">0</span><span class="text-accent">★</span></p><p class="mt-1 text-[11px] uppercase tracking-eyebrow text-mute">Google</p></div>
           </div>
         </div>
       </div>
@@ -55,16 +55,16 @@
     <section id="ubicacion" class="border-t border-white/[.06] bg-coal">
       <div class="mx-auto grid max-w-7xl gap-12 px-5 py-28 md:px-10 md:py-36 lg:grid-cols-12">
         <div class="reveal lg:col-span-5">
-          <p class="mb-4 text-[11px] uppercase tracking-eyebrow text-champagne">Ubicación</p>
-          <h2 class="font-serif text-5xl leading-[.95] md:text-6xl">Vení a verlo<br /><em class="text-bone/70">en persona.</em></h2>
+          <p class="mb-4 text-[11px] uppercase tracking-eyebrow text-accent">Ubicación</p>
+          <h2 class="font-serif text-5xl leading-[.95] md:text-6xl">Vení a verlo<br /><span class="text-bone/70">en persona.</span></h2>
           <div data-open-status class="mt-8 inline-flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-xs"></div>
           <dl class="mt-10 space-y-6 text-sm">
             <div><dt class="text-[11px] uppercase tracking-eyebrow text-mute">Dirección</dt><dd class="mt-2 text-base"><span data-cfg="direccion"></span>, <span data-cfg="ciudad"></span></dd></div>
-            <div><dt class="text-[11px] uppercase tracking-eyebrow text-mute">Teléfono</dt><dd class="mt-2 text-base"><a data-wa="general" class="hover:text-champagne" data-cfg="telefono"></a></dd></div>
+            <div><dt class="text-[11px] uppercase tracking-eyebrow text-mute">Teléfono</dt><dd class="mt-2 text-base"><a data-wa="general" class="hover:text-accent" data-cfg="telefono"></a></dd></div>
             <div><dt class="text-[11px] uppercase tracking-eyebrow text-mute">Horarios</dt><dd data-hours class="mt-2 divide-y divide-white/[.06]"></dd></div>
           </dl>
           <div class="mt-10 flex flex-wrap gap-3">
-            <a data-href="directions" target="_blank" rel="noopener" class="rounded-full bg-bone px-6 py-3 text-sm font-medium text-ink transition hover:bg-champagne">Cómo llegar</a>
+            <a data-href="directions" target="_blank" rel="noopener" class="rounded-full bg-bone px-6 py-3 text-sm font-medium text-ink transition hover:bg-accent">Cómo llegar</a>
             <a data-wa="visita" class="rounded-full border border-white/15 px-6 py-3 text-sm transition hover:border-white/40">Agendar visita</a>
           </div>
         </div>
@@ -79,7 +79,7 @@
     <!-- ═══ TESTIMONIOS ═══ -->
     <section class="mx-auto max-w-7xl px-5 py-28 md:px-10 md:py-36">
       <div class="reveal mb-14 flex items-end justify-between">
-        <h2 class="font-serif text-5xl leading-[.95] md:text-6xl">Lo dicen<br /><em class="text-bone/70">quienes ya manejan.</em></h2>
+        <h2 class="font-serif text-5xl leading-[.95] md:text-6xl">Lo dicen<br /><span class="text-bone/70">quienes ya manejan.</span></h2>
         <a data-href="reviews" target="_blank" rel="noopener" class="hidden text-sm text-mute underline-offset-4 hover:text-bone hover:underline md:block">Ver reseñas en Google →</a>
       </div>
       <div id="testimonials" class="grid gap-5 md:grid-cols-3"></div>
@@ -89,8 +89,8 @@
     <section class="border-t border-white/[.06]">
       <div class="mx-auto grid max-w-7xl gap-12 px-5 py-28 md:px-10 md:py-36 lg:grid-cols-12">
         <div class="reveal lg:col-span-4">
-          <p class="mb-4 text-[11px] uppercase tracking-eyebrow text-champagne">Preguntas frecuentes</p>
-          <h2 class="font-serif text-5xl leading-[.95]">Lo que todos<br /><em class="text-bone/70">nos preguntan.</em></h2>
+          <p class="mb-4 text-[11px] uppercase tracking-eyebrow text-accent">Preguntas frecuentes</p>
+          <h2 class="font-serif text-5xl leading-[.95]">Lo que todos<br /><span class="text-bone/70">nos preguntan.</span></h2>
           <a data-wa="general" class="mt-8 inline-flex text-sm text-mute underline-offset-4 hover:text-bone hover:underline">¿Otra duda? Escribinos →</a>
         </div>
         <div id="faq" class="border-t border-white/[.06] lg:col-span-8"></div>

@@ -14,7 +14,7 @@
   <script src="assets/js/tailwind.config.js"></script>
   <link rel="stylesheet" href="assets/css/styles.css" />
 </head>
-<body data-page="vehiculo" class="bg-ink pb-24 font-sans text-bone selection:bg-champagne selection:text-ink lg:pb-0">
+<body data-page="vehiculo" class="bg-ink pb-24 font-sans text-bone selection:bg-accent selection:text-ink lg:pb-0">
   <div id="site-header"></div>
 
   <main class="pt-32 md:pt-36">
@@ -24,11 +24,11 @@
     <!-- Estado "no encontrado" -->
     <template id="notFound">
       <div class="py-24 text-center">
-        <p class="text-[11px] uppercase tracking-eyebrow text-champagne">Unidad no disponible</p>
-        <h1 class="mt-4 font-serif text-6xl md:text-7xl">Este auto ya<br /><em class="text-bone/70">encontró dueño.</em></h1>
+        <p class="text-[11px] uppercase tracking-eyebrow text-accent">Unidad no disponible</p>
+        <h1 class="mt-4 font-serif text-6xl md:text-7xl">Este auto ya<br /><span class="text-bone/70">encontró dueño.</span></h1>
         <p class="mx-auto mt-6 max-w-sm text-sm text-mute">Puede que se haya vendido o que el enlace esté mal. Mirá el stock actual o pedinos una búsqueda.</p>
         <div class="mt-10 flex flex-wrap justify-center gap-3">
-          <a href="stock.html" class="rounded-full bg-bone px-7 py-4 text-sm font-medium text-ink transition hover:bg-champagne">Ver stock</a>
+          <a href="stock.html" class="rounded-full bg-bone px-7 py-4 text-sm font-medium text-ink transition hover:bg-accent">Ver stock</a>
           <a data-wa="busqueda" class="rounded-full border border-white/15 px-7 py-4 text-sm transition hover:border-white/40">Pedir búsqueda</a>
         </div>
       </div>
@@ -37,7 +37,7 @@
     <!-- ═══ RELACIONADOS ═══ -->
     <section class="mx-auto max-w-7xl px-5 py-28 md:px-10 md:py-36">
       <div class="reveal mb-12 flex items-end justify-between">
-        <h2 class="font-serif text-4xl leading-[.95] md:text-5xl">También te<br /><em class="text-bone/70">puede interesar.</em></h2>
+        <h2 class="font-serif text-4xl leading-[.95] md:text-5xl">También te<br /><span class="text-bone/70">puede interesar.</span></h2>
         <a href="stock.html" class="text-sm text-mute underline-offset-4 hover:text-bone hover:underline">Ver todo →</a>
       </div>
       <div id="related" class="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-12 lg:gap-6"></div>

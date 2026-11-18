@@ -1,4 +1,4 @@
-/* Tokens de diseño. Cambiá 'champagne' por el color de marca de cada agencia. */
+/* Tokens de diseño. Cambiá 'accent' por el color de marca de cada agencia. */
 tailwind.config = {
   theme: {
     extend: {
@@ -8,7 +8,7 @@ tailwind.config = {
         smoke: '#181818',      // tarjetas / placeholders
         bone: '#EDEAE4',       // texto principal
         mute: '#8A8780',       // texto secundario
-        champagne: '#C9B68A',  // acento
+        accent: '#D3202A',     // rojo Bustelo (del logo)
       },
       fontFamily: {
         serif: ['"Instrument Serif"', 'Georgia', 'serif'],

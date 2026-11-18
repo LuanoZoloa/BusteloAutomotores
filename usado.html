@@ -14,21 +14,21 @@
   <script src="assets/js/tailwind.config.js"></script>
   <link rel="stylesheet" href="assets/css/styles.css" />
 </head>
-<body data-page="usado" class="bg-ink font-sans text-bone selection:bg-champagne selection:text-ink">
+<body data-page="usado" class="bg-ink font-sans text-bone selection:bg-accent selection:text-ink">
   <div id="site-header"></div>
 
   <main class="pt-36 md:pt-44">
     <section class="mx-auto grid max-w-7xl gap-16 px-5 pb-28 md:px-10 md:pb-36 lg:grid-cols-12">
       <!-- ═══ COPY + PROCESO ═══ -->
       <div class="lg:col-span-5">
-        <p class="reveal mb-4 text-[11px] uppercase tracking-eyebrow text-champagne">Parte de pago</p>
-        <h1 class="reveal font-serif text-6xl leading-[.9] md:text-7xl">Tu usado vale.<br /><em class="text-bone/70">Te lo decimos en el día.</em></h1>
+        <p class="reveal mb-4 text-[11px] uppercase tracking-eyebrow text-accent">Parte de pago</p>
+        <h1 class="reveal font-serif text-6xl leading-[.9] md:text-7xl">Tu usado vale.<br /><span class="text-bone/70">Te lo decimos en el día.</span></h1>
         <p class="reveal mt-8 max-w-sm text-[15px] leading-relaxed text-mute">Completá los datos, te abrimos WhatsApp con todo listo y nos mandás unas fotos. Respondemos con una tasación real, sin compromiso.</p>
 
         <ol class="mt-14 space-y-8">
-          <li class="reveal flex gap-6"><span class="font-serif text-2xl italic text-champagne">01</span><div><p class="font-medium">Nos contás qué tenés</p><p class="mt-1 text-sm text-mute">Datos básicos y 4–6 fotos: frente, laterales, interior y tablero.</p></div></li>
-          <li class="reveal flex gap-6"><span class="font-serif text-2xl italic text-champagne">02</span><div><p class="font-medium">Te pasamos un valor</p><p class="mt-1 text-sm text-mute">Tasación por fotos el mismo día hábil.</p></div></li>
-          <li class="reveal flex gap-6"><span class="font-serif text-2xl italic text-champagne">03</span><div><p class="font-medium">Lo confirmamos en persona</p><p class="mt-1 text-sm text-mute">Revisión de 20 minutos en la agencia y cerramos la operación.</p></div></li>
+          <li class="reveal flex gap-6"><span class="font-serif text-2xl  text-accent">01</span><div><p class="font-medium">Nos contás qué tenés</p><p class="mt-1 text-sm text-mute">Datos básicos y 4–6 fotos: frente, laterales, interior y tablero.</p></div></li>
+          <li class="reveal flex gap-6"><span class="font-serif text-2xl  text-accent">02</span><div><p class="font-medium">Te pasamos un valor</p><p class="mt-1 text-sm text-mute">Tasación por fotos el mismo día hábil.</p></div></li>
+          <li class="reveal flex gap-6"><span class="font-serif text-2xl  text-accent">03</span><div><p class="font-medium">Lo confirmamos en persona</p><p class="mt-1 text-sm text-mute">Revisión de 20 minutos en la agencia y cerramos la operación.</p></div></li>
         </ol>
       </div>
 
@@ -39,7 +39,7 @@
             <p class="font-serif text-3xl">Datos de tu vehículo</p>
             <span class="text-xs text-mute">* obligatorio</span>
           </div>
-          <p id="interes" class="mt-4 hidden rounded-xl border border-champagne/30 bg-champagne/5 px-4 py-3 text-sm"></p>
+          <p id="interes" class="mt-4 hidden rounded-xl border border-accent/30 bg-accent/5 px-4 py-3 text-sm"></p>
 
           <div class="mt-8 grid gap-4 md:grid-cols-2">
             <label class="block"><span class="mb-2 block text-xs text-mute">Marca *</span><input name="marca" required class="field" placeholder="Ej: Volkswagen" /></label>
@@ -57,7 +57,7 @@
 
           <p id="formError" class="mt-4 hidden text-sm text-red-300">Completá los campos obligatorios.</p>
 
-          <button type="submit" class="mt-8 flex w-full items-center justify-center gap-3 rounded-full bg-bone px-7 py-4 text-sm font-medium text-ink transition hover:bg-champagne">
+          <button type="submit" class="mt-8 flex w-full items-center justify-center gap-3 rounded-full bg-bone px-7 py-4 text-sm font-medium text-ink transition hover:bg-accent">
             Enviar por WhatsApp <span>→</span>
           </button>
           <p class="mt-4 text-center text-xs text-mute">Se abre WhatsApp con tu mensaje armado. Después adjuntás las fotos.</p>

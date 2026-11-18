@@ -59,7 +59,7 @@
     return CONFIG.horarios.map(h => {
       const isToday = h.dias.includes(today);
       return `<div class="flex justify-between gap-6 py-3 ${isToday ? 'text-bone' : 'text-mute'}">
-        <span>${esc(h.label)}${isToday ? ' <span class="ml-2 text-[10px] uppercase tracking-wider text-champagne">Hoy</span>' : ''}</span>
+        <span>${esc(h.label)}${isToday ? ' <span class="ml-2 text-[10px] uppercase tracking-wider text-accent">Hoy</span>' : ''}</span>
         <span>${h.cerrado ? 'Cerrado' : `${h.desde} – ${h.hasta}`}</span></div>`;
     }).join('');
   };
@@ -72,7 +72,7 @@
   const media = (src, alt, label, cls = '') => `
     <div class="media relative overflow-hidden bg-smoke ${cls}">
       <div class="absolute inset-0 grid place-items-center bg-[radial-gradient(80%_80%_at_70%_20%,#222,#111)]">
-        <span class="px-4 text-center font-serif text-5xl italic text-white/10 md:text-6xl">${esc(label)}</span>
+        <span class="px-4 text-center font-serif text-5xl  text-white/10 md:text-6xl">${esc(label)}</span>
       </div>
       <img src="${esc(src)}" alt="${esc(alt)}" loading="lazy" decoding="async" class="absolute inset-0 h-full w-full object-cover" onerror="this.classList.add('is-broken')" />
     </div>`;
@@ -80,8 +80,8 @@
   const badge = txt => `<span class="rounded-full border border-white/10 px-3 py-1 text-[11px] text-bone/80">${esc(txt)}</span>`;
 
   const logoHTML = (size = 'h-9 w-9') => CONFIG.logo
-    ? `<img src="${esc(CONFIG.logo)}" alt="${esc(CONFIG.nombre)}" class="h-8 w-auto" />`
-    : `<span class="grid ${size} place-items-center rounded-full border border-white/15 font-serif text-lg italic text-bone">${esc(CONFIG.monograma)}</span>`;
+    ? `<img src="${esc(CONFIG.logo)}" alt="${esc(CONFIG.nombre)}" class="${size} rounded-full object-cover ring-1 ring-white/10" />`
+    : `<span class="grid ${size} place-items-center rounded-full border border-white/15 font-serif text-lg  text-bone">${esc(CONFIG.monograma)}</span>`;
 
   // Patrón asimétrico de 12 columnas: 7+5 / 5+7 / 4+4+4
   const PATTERN = [
@@ -103,21 +103,21 @@
         <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
         <div class="absolute left-4 top-4 flex gap-2">
           ${v.destacado ? '<span class="rounded-full bg-bone px-3 py-1 text-[10px] font-medium uppercase tracking-wider text-ink">Destacado</span>' : ''}
-          ${v.estado === 'Reservado' ? '<span class="rounded-full bg-black/60 px-3 py-1 text-[10px] uppercase tracking-wider text-champagne backdrop-blur">Reservado</span>' : ''}
+          ${v.estado === 'Reservado' ? '<span class="rounded-full bg-black/60 px-3 py-1 text-[10px] uppercase tracking-wider text-accent backdrop-blur">Reservado</span>' : ''}
         </div>
         <span class="absolute right-4 top-4 rounded-full bg-black/40 px-3 py-1 text-[10px] tracking-wider text-white/70 backdrop-blur">REF ${esc(v.id)}</span>
       </a>
       <div class="flex flex-1 flex-col p-6 md:p-7">
         <p class="text-[11px] uppercase tracking-eyebrow text-mute">${esc(v.marca)} · ${v.anio}</p>
-        <a href="${vUrl(v)}"><h3 class="mt-2 font-serif ${p.big ? 'text-4xl md:text-5xl' : 'text-3xl md:text-4xl'} leading-none transition hover:text-champagne">${esc(v.modelo)}</h3></a>
+        <a href="${vUrl(v)}"><h3 class="mt-2 font-serif ${p.big ? 'text-4xl md:text-5xl' : 'text-3xl md:text-4xl'} leading-none transition hover:text-accent">${esc(v.modelo)}</h3></a>
         <p class="mt-2 text-sm text-mute">${esc(v.version)}</p>
         <div class="mt-5 flex flex-wrap gap-2">${badge(`${fmtNum(v.km)} km`)}${badge(v.combustible)}${badge(v.transmision)}${badge(v.tipo)}</div>
         <div class="mt-auto flex items-end justify-between gap-4 pt-7">
           <div>
             <p class="text-[10px] uppercase tracking-eyebrow text-mute">Precio</p>
-            <p class="mt-1 font-serif text-3xl ${v.precio == null ? 'italic text-bone/70' : ''}">${fmtPrice(v)}</p>
+            <p class="mt-1 font-serif text-3xl ${v.precio == null ? ' text-bone/70' : ''}">${fmtPrice(v)}</p>
           </div>
-          <a href="${waUrl(MSG.vehiculo(v))}" target="_blank" rel="noopener" class="inline-flex shrink-0 items-center gap-2 rounded-full bg-bone px-5 py-3 text-[13px] font-medium text-ink transition hover:bg-champagne">
+          <a href="${waUrl(MSG.vehiculo(v))}" target="_blank" rel="noopener" class="inline-flex shrink-0 items-center gap-2 rounded-full bg-bone px-5 py-3 text-[13px] font-medium text-ink transition hover:bg-accent">
             Consultar <span class="arrow">→</span>
           </a>
         </div>
@@ -129,7 +129,7 @@
     <figure class="reveal flex flex-col justify-between rounded-3xl border border-white/[.06] bg-coal p-8">
       <blockquote class="font-serif text-2xl leading-snug">“${esc(t.texto)}”</blockquote>
       <figcaption class="mt-10 flex items-center gap-3 text-sm">
-        <span class="grid h-10 w-10 place-items-center rounded-full bg-smoke font-serif italic text-champagne">${esc(t.nombre[0])}</span>
+        <span class="grid h-10 w-10 place-items-center rounded-full bg-smoke font-serif  text-accent">${esc(t.nombre[0])}</span>
         <span><span class="block">${esc(t.nombre)}</span><span class="text-xs text-mute">${esc(t.lugar)}</span></span>
       </figcaption>
     </figure>`;
@@ -157,7 +157,7 @@
           ${NAV.map(n => `<a href="${n.href}" class="nav-link transition hover:text-bone" ${n.key === activeKey ? 'aria-current="page"' : ''}>${n.label}</a>`).join('')}
         </nav>
         <div class="flex items-center gap-2">
-          <a href="${waUrl(MSG.general())}" target="_blank" rel="noopener" class="hidden rounded-full bg-bone px-4 py-2 text-[13px] font-medium text-ink transition hover:bg-champagne sm:inline-flex">Hablar ahora</a>
+          <a href="${waUrl(MSG.general())}" target="_blank" rel="noopener" class="hidden rounded-full bg-bone px-4 py-2 text-[13px] font-medium text-ink transition hover:bg-accent sm:inline-flex">Hablar ahora</a>
           <button id="menuBtn" class="grid h-9 w-9 place-items-center rounded-full border border-white/10 md:hidden" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobileMenu">
             <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M2 5h12M2 11h12"/></svg>
           </button>
@@ -165,8 +165,8 @@
       </div>
       <div id="mobileMenu" class="mx-auto mt-2 hidden max-w-6xl rounded-3xl border border-white/10 bg-ink/95 p-6 backdrop-blur-xl md:hidden">
         <nav class="flex flex-col gap-4 font-serif text-3xl">
-          <a href="index.html" class="${PAGE === 'home' ? 'text-champagne' : ''}">Inicio</a>
-          ${NAV.map(n => `<a href="${n.href}" class="${n.key === activeKey ? 'text-champagne' : ''}">${n.label}</a>`).join('')}
+          <a href="index.html" class="${PAGE === 'home' ? 'text-accent' : ''}">Inicio</a>
+          ${NAV.map(n => `<a href="${n.href}" class="${n.key === activeKey ? 'text-accent' : ''}">${n.label}</a>`).join('')}
         </nav>
         <a href="${waUrl(MSG.general())}" target="_blank" rel="noopener" class="mt-6 flex justify-center rounded-full bg-bone px-6 py-3 text-sm font-medium text-ink">Escribinos por WhatsApp</a>
       </div>
@@ -186,21 +186,21 @@
       <div class="mx-auto grid max-w-7xl gap-12 px-5 py-16 text-sm md:grid-cols-2 md:px-10 lg:grid-cols-12">
         <div class="lg:col-span-4">
           <div class="flex items-center gap-3">${logoHTML()}<span class="font-medium">${esc(CONFIG.nombre)}</span></div>
-          <p class="mt-5 max-w-xs font-serif text-2xl italic leading-snug text-bone/70">${esc(CONFIG.eslogan)}</p>
+          <p class="mt-5 max-w-xs font-serif text-2xl  leading-snug text-bone/70">${esc(CONFIG.eslogan)}</p>
         </div>
         <div class="lg:col-span-2">
           <p class="text-[11px] uppercase tracking-eyebrow text-mute">Navegación</p>
           <ul class="mt-5 space-y-3">
-            <li><a href="index.html" class="hover:text-champagne">Inicio</a></li>
-            ${NAV.map(n => `<li><a href="${n.href}" class="hover:text-champagne">${n.label}</a></li>`).join('')}
+            <li><a href="index.html" class="hover:text-accent">Inicio</a></li>
+            ${NAV.map(n => `<li><a href="${n.href}" class="hover:text-accent">${n.label}</a></li>`).join('')}
           </ul>
         </div>
         <div class="lg:col-span-3">
           <p class="text-[11px] uppercase tracking-eyebrow text-mute">Contacto</p>
           <ul class="mt-5 space-y-3">
-            <li><a href="${waUrl(MSG.general())}" target="_blank" rel="noopener" class="hover:text-champagne">${esc(CONFIG.telefono)}</a></li>
-            <li><a href="https://instagram.com/${esc(ig)}" target="_blank" rel="noopener" class="hover:text-champagne">${esc(CONFIG.instagram)}</a></li>
-            <li><a href="mailto:${esc(CONFIG.email)}" class="hover:text-champagne">${esc(CONFIG.email)}</a></li>
+            <li><a href="${waUrl(MSG.general())}" target="_blank" rel="noopener" class="hover:text-accent">${esc(CONFIG.telefono)}</a></li>
+            <li><a href="https://instagram.com/${esc(ig)}" target="_blank" rel="noopener" class="hover:text-accent">${esc(CONFIG.instagram)}</a></li>
+            <li><a href="mailto:${esc(CONFIG.email)}" class="hover:text-accent">${esc(CONFIG.email)}</a></li>
             <li class="text-mute">${esc(CONFIG.direccion)}, ${esc(CONFIG.ciudad)}</li>
           </ul>
         </div>
@@ -218,7 +218,7 @@
       </div>
     </footer>
     ${PAGE === 'vehiculo' ? '' : `
-    <a href="${waUrl(MSG.general())}" target="_blank" rel="noopener" aria-label="Escribir por WhatsApp" class="wa-float fixed bottom-5 right-5 z-40 grid h-14 w-14 place-items-center rounded-full bg-bone text-ink transition hover:scale-105 hover:bg-champagne">
+    <a href="${waUrl(MSG.general())}" target="_blank" rel="noopener" aria-label="Escribir por WhatsApp" class="wa-float fixed bottom-5 right-5 z-40 grid h-14 w-14 place-items-center rounded-full bg-bone text-ink transition hover:scale-105 hover:bg-accent">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.65.07-.3-.15-1.25-.46-2.38-1.47-.88-.79-1.47-1.76-1.65-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.09 1.75-.72 2-1.41.25-.69.25-1.29.17-1.41-.07-.12-.27-.2-.57-.35zM12.04 21.5h-.01a9.45 9.45 0 01-4.82-1.32l-.35-.21-3.58.94.96-3.49-.23-.36a9.43 9.43 0 01-1.45-5.03c0-5.22 4.25-9.47 9.48-9.47a9.4 9.4 0 016.7 2.78 9.42 9.42 0 012.77 6.7c0 5.22-4.25 9.46-9.47 9.46zm8.06-17.53A11.33 11.33 0 0012.04.63C5.76.63.65 5.74.65 12.02c0 2 .52 3.96 1.52 5.69L.55 23.63l6.05-1.59a11.36 11.36 0 005.43 1.38h.01c6.28 0 11.39-5.11 11.39-11.39 0-3.04-1.18-5.9-3.33-8.06z"/></svg>
     </a>`}`;
   }
@@ -265,7 +265,7 @@
 
   function marquee() {
     const el = $('#brandMarquee'); if (!el) return;
-    const row = uniq(stock(), 'marca').map(b => `<span>${esc(b)}</span><span class="text-champagne/40">·</span>`).join('');
+    const row = uniq(stock(), 'marca').map(b => `<span>${esc(b)}</span><span class="text-accent/40">·</span>`).join('');
     el.innerHTML = row.repeat(8);
   }
 
@@ -306,7 +306,7 @@
       const n = stock().filter(v => v.tipo === t).length;
       return `<a href="stock.html?tipo=${encodeURIComponent(t)}" class="row-link reveal group flex items-baseline justify-between border-b border-white/[.06] py-6 md:py-8">
         <span class="flex items-baseline gap-6">
-          <span class="w-8 font-serif text-lg italic text-mute">${String(i + 1).padStart(2, '0')}</span>
+          <span class="w-8 font-serif text-lg  text-mute">${String(i + 1).padStart(2, '0')}</span>
           <span class="row-label font-serif text-5xl md:text-7xl">${esc(t)}</span>
         </span>
         <span class="flex items-center gap-4 text-sm text-mute"><span>${n} ${n === 1 ? 'unidad' : 'unidades'}</span><span class="arrow">→</span></span>
@@ -411,7 +411,7 @@
             <button id="gPrev" class="absolute left-4 top-1/2 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-black/50 text-bone backdrop-blur transition hover:bg-black/70" aria-label="Foto anterior">←</button>
             <button id="gNext" class="absolute right-4 top-1/2 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-black/50 text-bone backdrop-blur transition hover:bg-black/70" aria-label="Foto siguiente">→</button>
             <span id="gCount" class="absolute bottom-4 right-4 rounded-full bg-black/50 px-3 py-1 text-[11px] tracking-wider backdrop-blur">1 / ${fotos.length}</span>` : ''}
-            ${v.estado === 'Reservado' ? '<span class="absolute left-4 top-4 rounded-full bg-black/60 px-3 py-1 text-[10px] uppercase tracking-wider text-champagne backdrop-blur">Reservado</span>' : ''}
+            ${v.estado === 'Reservado' ? '<span class="absolute left-4 top-4 rounded-full bg-black/60 px-3 py-1 text-[10px] uppercase tracking-wider text-accent backdrop-blur">Reservado</span>' : ''}
           </div>
           ${fotos.length > 1 ? `<div id="thumbs" class="no-scrollbar mt-4 flex gap-3 overflow-x-auto pb-1">
             ${fotos.map((f, i) => `<button class="thumb shrink-0 overflow-hidden rounded-xl" data-i="${i}" aria-label="Ver foto ${i + 1}" ${i === 0 ? 'aria-current="true"' : ''}>${media(f, '', String(i + 1).padStart(2, '0'), 'h-20 w-28 [&_span]:text-2xl')}</button>`).join('')}
@@ -419,16 +419,16 @@
 
           <div class="mt-14 grid gap-12 md:grid-cols-2">
             <div>
-              <p class="text-[11px] uppercase tracking-eyebrow text-champagne">Ficha técnica</p>
+              <p class="text-[11px] uppercase tracking-eyebrow text-accent">Ficha técnica</p>
               <dl class="mt-4">
                 ${spec('Año', v.anio)}${spec('Kilometraje', `${fmtNum(v.km)} km`)}${spec('Motor', v.motor)}${spec('Combustible', v.combustible)}${spec('Transmisión', v.transmision)}${spec('Carrocería', v.tipo)}${spec('Puertas', v.puertas)}${spec('Color', v.color)}
               </dl>
             </div>
             <div>
-              ${v.descripcion ? `<p class="text-[11px] uppercase tracking-eyebrow text-champagne">Sobre esta unidad</p>
+              ${v.descripcion ? `<p class="text-[11px] uppercase tracking-eyebrow text-accent">Sobre esta unidad</p>
               <p class="mt-4 font-serif text-2xl leading-snug">${esc(v.descripcion)}</p>` : ''}
-              ${v.equipamiento?.length ? `<p class="mt-10 text-[11px] uppercase tracking-eyebrow text-champagne">Equipamiento destacado</p>
-              <ul class="mt-4 space-y-3 text-sm">${v.equipamiento.map(e => `<li class="flex gap-3"><span class="text-champagne">—</span>${esc(e)}</li>`).join('')}</ul>` : ''}
+              ${v.equipamiento?.length ? `<p class="mt-10 text-[11px] uppercase tracking-eyebrow text-accent">Equipamiento destacado</p>
+              <ul class="mt-4 space-y-3 text-sm">${v.equipamiento.map(e => `<li class="flex gap-3"><span class="text-accent">—</span>${esc(e)}</li>`).join('')}</ul>` : ''}
             </div>
           </div>
         </div>
@@ -444,15 +444,15 @@
             <div class="mt-6 flex flex-wrap gap-2">${badge(`${fmtNum(v.km)} km`)}${badge(v.combustible)}${badge(v.transmision)}</div>
             <div class="mt-8 border-t border-white/[.06] pt-6">
               <p class="text-[10px] uppercase tracking-eyebrow text-mute">Precio</p>
-              <p class="mt-1 font-serif text-5xl ${v.precio == null ? 'italic text-bone/70' : ''}">${fmtPrice(v)}</p>
+              <p class="mt-1 font-serif text-5xl ${v.precio == null ? ' text-bone/70' : ''}">${fmtPrice(v)}</p>
             </div>
             <div class="mt-8 flex flex-col gap-3">
-              <a href="${waUrl(MSG.vehiculo(v))}" target="_blank" rel="noopener" class="rounded-full bg-bone px-6 py-4 text-center text-sm font-medium text-ink transition hover:bg-champagne">Consultar por WhatsApp</a>
+              <a href="${waUrl(MSG.vehiculo(v))}" target="_blank" rel="noopener" class="rounded-full bg-bone px-6 py-4 text-center text-sm font-medium text-ink transition hover:bg-accent">Consultar por WhatsApp</a>
               <a href="${waUrl(MSG.vehiculoVisita(v))}" target="_blank" rel="noopener" class="rounded-full border border-white/15 px-6 py-4 text-center text-sm transition hover:border-white/40">Coordinar una visita</a>
             </div>
             <div class="mt-6 grid grid-cols-2 gap-3 text-sm">
-              ${v.precio != null ? `<a href="financiacion.html?id=${encodeURIComponent(v.id)}" class="rounded-2xl border border-white/[.06] p-4 transition hover:border-champagne/50"><span class="block text-mute">Financiación</span><span class="mt-1 block">Simular cuota →</span></a>` : ''}
-              <a href="usado.html?id=${encodeURIComponent(v.id)}" class="rounded-2xl border border-white/[.06] p-4 transition hover:border-champagne/50 ${v.precio == null ? 'col-span-2' : ''}"><span class="block text-mute">Tu usado</span><span class="mt-1 block">Entregarlo en parte de pago →</span></a>
+              ${v.precio != null ? `<a href="financiacion.html?id=${encodeURIComponent(v.id)}" class="rounded-2xl border border-white/[.06] p-4 transition hover:border-accent/50"><span class="block text-mute">Financiación</span><span class="mt-1 block">Simular cuota →</span></a>` : ''}
+              <a href="usado.html?id=${encodeURIComponent(v.id)}" class="rounded-2xl border border-white/[.06] p-4 transition hover:border-accent/50 ${v.precio == null ? 'col-span-2' : ''}"><span class="block text-mute">Tu usado</span><span class="mt-1 block">Entregarlo en parte de pago →</span></a>
             </div>
             <div class="mt-6 inline-flex items-center gap-2 text-xs text-mute">${openBadge()}</div>
           </div>

@@ -17,7 +17,7 @@ Sitio multipágina, estático (HTML + Tailwind + JS sin frameworks). Se puede ab
 
 1. **`assets/js/data.js`**: nombre, WhatsApp, dirección, horarios, stock, testimonios, FAQ y tasa de financiación.
 2. **`img/`**: fotos (ver `img/README.md`).
-3. **`assets/js/tailwind.config.js`**: color de acento (`champagne`) si la marca lo pide.
+3. **`assets/js/tailwind.config.js`**: color de acento (`accent`) si la marca lo pide.
 4. Títulos de pestaña y `meta description` en el `<head>` de cada HTML.
 
 ## Estructura

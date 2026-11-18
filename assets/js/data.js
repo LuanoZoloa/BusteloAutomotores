@@ -6,25 +6,25 @@
 const CONFIG = {
   nombre: 'Bustelo Automotores',
   monograma: 'BA',
-  eslogan: 'Vehículos seleccionados. Negocios bien cerrados.',
-  ciudad: 'Ciudad, Provincia',
-  direccion: 'Av. Siempre Viva 742',
-  whatsapp: '5491100000000',          // formato internacional, sin + ni espacios
-  telefono: '+54 9 11 0000-0000',     // como se muestra en pantalla
-  instagram: '@agencia',
-  email: 'ventas@agencia.com',
+  eslogan: 'Venta de usados y 0 km.',
+  ciudad: 'Flores, CABA',
+  direccion: 'Av. Lafuente 1233',
+  whatsapp: '5491155125391',          // ⚠ CONFIRMAR: deducido del 11 5512-5391 del perfil (el wa.link no muestra el número)
+  telefono: '11 5512-5391',           // en IG figura un segundo número (4637…) cortado
+  instagram: '@busteloautomotores',
+  email: 'ventas@agencia.com',         // ⚠ PENDIENTE: no figura en IG
   googleReviews: 'https://www.google.com/maps',
   timezone: 'America/Argentina/Buenos_Aires',
 
   // Imágenes de marca (ver img/README.md)
-  logo: '',                           // ej: 'img/brand/logo.svg' — si está vacío se usa el monograma
+  logo: 'img/brand/logo.png',         // recortado del perfil de IG; reemplazar por el original en alta si lo consiguen
   heroImage: 'img/hero/hero.jpg',     // si no existe, el hero queda con fondo oscuro
 
-  metricas: { years: 15, sold: 1200, rating: 4.9 },
+  metricas: { years: 15, sold: 1200, rating: 4.9 },   // ⚠ PENDIENTE: valores de ejemplo
 
   horarios: [
-    { label: 'Lunes a viernes', dias: [1, 2, 3, 4, 5], desde: '09:00', hasta: '19:00' },
-    { label: 'Sábados',         dias: [6],             desde: '09:30', hasta: '13:30' },
+    { label: 'Lunes a viernes', dias: [1, 2, 3, 4, 5], desde: '10:00', hasta: '19:00' },
+    { label: 'Sábados',         dias: [6],             desde: '10:00', hasta: '16:00' },
     { label: 'Domingos',        dias: [0],             cerrado: true },
   ],
 
