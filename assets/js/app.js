@@ -74,7 +74,7 @@
       <div class="absolute inset-0 grid place-items-center bg-[radial-gradient(80%_80%_at_70%_20%,#222,#111)]">
         <span class="px-4 text-center font-display text-5xl  text-white/10 md:text-6xl">${esc(label)}</span>
       </div>
-      <img src="${esc(src)}" alt="${esc(alt)}" loading="lazy" decoding="async" class="absolute inset-0 h-full w-full object-cover" onerror="this.classList.add('is-broken')" />
+      <img src="${esc(src)}" alt="${esc(alt)}" loading="lazy" decoding="async" class="absolute inset-0 h-full w-full object-cover text-transparent" onerror="this.classList.add('is-broken')" />
     </div>`;
 
   const badge = txt => `<span class="rounded-full border border-white/10 px-3 py-1 text-[11px] text-bone/80">${esc(txt)}</span>`;
@@ -97,8 +97,8 @@
   function card(v, i = 0, pattern = PATTERN) {
     const p = pattern[i % pattern.length];
     return `
-    <article class="card reveal group flex flex-col overflow-hidden rounded-3xl border border-white/[.06] bg-coal transition-colors duration-500 hover:border-white/15 ${p.span}">
-      <a href="${vUrl(v)}" class="relative block" aria-label="Ver ${esc(title(v))}">
+    <article class="card reveal group flex flex-col overflow-hidden rounded-3xl border border-white/[.06] bg-coal transition-colors duration-500 hover:border-white/15 ${p.span}" data-card="${esc(v.id)}">
+      <button type="button" data-expand="${esc(v.id)}" class="relative block w-full text-left" aria-label="Más información de ${esc(title(v))}">
         ${media(fotoUrl(v), `${title(v)} ${v.anio}`, v.marca, `h-[260px] ${p.h}`)}
         <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
         <div class="absolute left-4 top-4 flex gap-2">
@@ -106,24 +106,158 @@
           ${v.estado === 'Reservado' ? '<span class="rounded-full bg-black/60 px-3 py-1 text-[10px] uppercase tracking-wider text-accent backdrop-blur">Reservado</span>' : ''}
         </div>
         <span class="absolute right-4 top-4 rounded-full bg-black/40 px-3 py-1 text-[10px] tracking-wider text-white/70 backdrop-blur">REF ${esc(v.id)}</span>
-      </a>
+      </button>
       <div class="flex flex-1 flex-col p-6 md:p-7">
-        <p class="text-[11px] uppercase tracking-eyebrow text-mute">${esc(v.marca)} · ${v.anio}</p>
-        <a href="${vUrl(v)}"><h3 class="mt-2 font-display ${p.big ? 'text-4xl md:text-5xl' : 'text-3xl md:text-4xl'} leading-none transition hover:text-accent">${esc(v.modelo)}</h3></a>
+        <p class="text-[11px] tracking-eyebrow text-mute">${v.anio}</p>
+        <button type="button" data-expand="${esc(v.id)}" class="mt-2 text-left">
+          <h3 class="font-display ${p.big ? 'text-4xl md:text-5xl' : 'text-3xl md:text-4xl'} leading-[1.02] transition hover:text-accent">${esc(title(v))}</h3>
+        </button>
         <p class="mt-2 text-sm text-mute">${esc(v.version)}</p>
         <div class="mt-5 flex flex-wrap gap-2">${badge(`${fmtNum(v.km)} km`)}${badge(v.combustible)}${badge(v.transmision)}${badge(v.tipo)}</div>
-        <div class="mt-auto flex items-end justify-between gap-4 pt-7">
-          <div>
-            <p class="text-[10px] uppercase tracking-eyebrow text-mute">Precio</p>
-            <p class="mt-1 font-display text-3xl ${v.precio == null ? ' text-bone/70' : ''}">${fmtPrice(v)}</p>
-          </div>
-          <a href="${waUrl(MSG.vehiculo(v))}" target="_blank" rel="noopener" class="inline-flex shrink-0 items-center gap-2 rounded-full bg-bone px-5 py-3 text-[13px] font-medium text-ink transition hover:bg-accent">
-            Consultar <span class="arrow">→</span>
-          </a>
+        <div class="mt-auto flex items-center justify-between gap-4 pt-7">
+          <p class="font-display text-3xl ${v.precio == null ? 'text-bone/70' : ''}">${fmtPrice(v)}</p>
+          <button type="button" data-expand="${esc(v.id)}" class="inline-flex shrink-0 items-center rounded-full bg-bone px-5 py-3 text-[13px] font-medium text-ink transition hover:bg-accent">Más info</button>
         </div>
       </div>
     </article>`;
   }
+
+  const specRow = (k, val) => val == null || val === '' ? '' : `<div class="flex justify-between gap-6 border-b border-white/[.06] py-3.5 text-sm"><dt class="text-mute">${k}</dt><dd class="text-right">${esc(val)}</dd></div>`;
+  const specList = v => specRow('Año', v.anio) + specRow('Kilometraje', `${fmtNum(v.km)} km`) + specRow('Motor', v.motor) + specRow('Combustible', v.combustible) + specRow('Transmisión', v.transmision) + specRow('Carrocería', v.tipo) + specRow('Puertas', v.puertas) + specRow('Color', v.color);
+
+  /* ──────────────────────────────────────────────────────────────
+     02b · VISTA EXPANDIDA
+     La tarjeta crece desde su posición hasta ocupar casi toda la
+     pantalla (animación FLIP) y muestra todas las fotos + la ficha.
+     Se cierra con ✕, Esc, clic afuera o el botón "atrás" del celular.
+     ────────────────────────────────────────────────────────────── */
+  const Expand = (() => {
+    let layer, panel, current, sourceCard, closing = false;
+    const EASE = 'cubic-bezier(.2,.7,.2,1)', DUR = reduceMotion ? 0 : 600;
+
+    const rectOf = el => { const r = el.getBoundingClientRect(); return { top: r.top, left: r.left, width: r.width, height: r.height }; };
+    const target = () => {
+      const m = innerWidth < 768 ? 0 : Math.max(innerWidth * 0.025, 16);
+      const w = Math.min(innerWidth - m * 2, 1480);
+      return { top: innerWidth < 768 ? 0 : innerHeight * 0.025, left: (innerWidth - w) / 2, width: w, height: innerWidth < 768 ? innerHeight : innerHeight * 0.95 };
+    };
+    const place = (r, radius) => Object.assign(panel.style, { top: r.top + 'px', left: r.left + 'px', width: r.width + 'px', height: r.height + 'px', borderRadius: radius });
+
+    function content(v) {
+      const fotos = fotosDe(v);
+      return `
+      <div class="sticky top-0 z-10 flex items-center justify-between gap-4 border-b border-white/[.06] bg-coal/90 px-5 py-4 backdrop-blur-xl md:px-8">
+        <div class="min-w-0">
+          <p class="text-[11px] tracking-eyebrow text-mute">${v.anio} · REF ${esc(v.id)}</p>
+          <p class="truncate font-display text-xl md:text-2xl">${esc(title(v))}</p>
+        </div>
+        <button type="button" data-close class="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-white/10 text-mute transition hover:border-white/30 hover:text-bone" aria-label="Cerrar">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l12 12M13 1L1 13"/></svg>
+        </button>
+      </div>
+
+      <div class="grid gap-8 p-5 md:p-8 lg:grid-cols-12 lg:gap-10">
+        <!-- Fotos: carrusel con snap en mobile, grilla editorial en desktop -->
+        <div class="min-w-0 lg:col-span-8">
+          <div class="no-scrollbar -mx-5 flex snap-x snap-mandatory gap-3 overflow-x-auto px-5 md:mx-0 md:px-0 lg:grid lg:grid-cols-2 lg:gap-4 lg:overflow-visible">
+            ${fotos.map((f, i) => `
+              <figure class="w-[88%] shrink-0 snap-center overflow-hidden rounded-2xl border border-white/[.06] md:w-[70%] lg:w-auto ${i === 0 ? 'lg:col-span-2' : ''}">
+                ${media(f, `${title(v)} — foto ${i + 1}`, String(i + 1).padStart(2, '0'), i === 0 ? 'aspect-[4/3] lg:aspect-[16/9]' : 'aspect-[4/3]')}
+              </figure>`).join('')}
+          </div>
+          <p class="mt-3 text-xs text-mute lg:hidden">${fotos.length} fotos · deslizá para ver más</p>
+        </div>
+
+        <!-- Información -->
+        <aside class="lg:col-span-4">
+          <div class="lg:sticky lg:top-24">
+            <p class="text-[11px] tracking-eyebrow text-mute">${v.anio}</p>
+            <h2 class="mt-2 font-display text-4xl leading-[1.02] md:text-5xl">${esc(title(v))}</h2>
+            <p class="mt-2 text-mute">${esc(v.version)}</p>
+            <p class="mt-6 font-display text-5xl ${v.precio == null ? 'text-bone/70' : ''}">${fmtPrice(v)}</p>
+            ${v.estado === 'Reservado' ? '<p class="mt-3 inline-flex rounded-full border border-accent/40 px-3 py-1 text-xs text-accent">Reservado</p>' : ''}
+
+            <div class="mt-8 flex flex-col gap-3">
+              <a href="${waUrl(MSG.vehiculo(v))}" target="_blank" rel="noopener" class="rounded-full bg-bone px-6 py-4 text-center text-sm font-medium text-ink transition hover:bg-accent">Consultar por WhatsApp</a>
+              <a href="${waUrl(MSG.vehiculoVisita(v))}" target="_blank" rel="noopener" class="rounded-full border border-white/15 px-6 py-4 text-center text-sm transition hover:border-white/40">Coordinar una visita</a>
+            </div>
+
+            <dl class="mt-10">${specList(v)}</dl>
+
+            ${v.equipamiento?.length ? `
+            <p class="mt-10 text-[11px] uppercase tracking-eyebrow text-mute">Equipamiento</p>
+            <div class="mt-4 flex flex-wrap gap-2">${v.equipamiento.map(badge).join('')}</div>` : ''}
+
+            ${v.descripcion ? `<p class="mt-10 text-[15px] leading-relaxed text-bone/80">${esc(v.descripcion)}</p>` : ''}
+
+            <div class="mt-10 grid grid-cols-2 gap-3 text-sm">
+              ${v.precio != null ? `<a href="financiacion.html?id=${encodeURIComponent(v.id)}" class="rounded-2xl border border-white/[.06] p-4 transition hover:border-white/20"><span class="block text-mute">Financiación</span><span class="mt-1 block">Simular cuota</span></a>` : ''}
+              <a href="usado.html?id=${encodeURIComponent(v.id)}" class="rounded-2xl border border-white/[.06] p-4 transition hover:border-white/20 ${v.precio == null ? 'col-span-2' : ''}"><span class="block text-mute">Tu usado</span><span class="mt-1 block">Parte de pago</span></a>
+            </div>
+            <a href="${vUrl(v)}" class="mt-6 inline-flex text-sm text-mute underline-offset-4 hover:text-bone hover:underline">Abrir ficha para compartir</a>
+          </div>
+        </aside>
+      </div>`;
+    }
+
+    function build() {
+      layer = document.createElement('div');
+      layer.className = 'fixed inset-0 z-[70]';
+      Object.assign(layer.style, { background: 'rgba(0,0,0,0)', backdropFilter: 'blur(0px)', transition: `background ${DUR}ms ease, backdrop-filter ${DUR}ms ease` });
+      layer.innerHTML = `<div class="expand-panel fixed overflow-hidden border border-white/10 bg-coal shadow-2xl" role="dialog" aria-modal="true">
+        <div class="expand-scroll h-full overflow-y-auto overscroll-contain opacity-0"></div></div>`;
+      panel = layer.firstElementChild;
+      layer.addEventListener('click', e => { if (e.target === layer || e.target.closest('[data-close]')) close(); });
+      document.body.appendChild(layer);
+    }
+
+    function open(id) {
+      const v = VEHICULOS.find(x => x.id === id); if (!v || current) return;
+      sourceCard = document.querySelector(`[data-card="${CSS.escape(id)}"]`);
+      current = v; build();
+      const scroll = panel.firstElementChild;
+      scroll.innerHTML = content(v);
+      const from = sourceCard ? rectOf(sourceCard) : target();
+      place(from, '24px');
+      document.documentElement.style.overflow = 'hidden';
+      if (sourceCard) sourceCard.style.visibility = 'hidden';
+      history.pushState({ expand: id }, '');
+
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        panel.style.transition = `top ${DUR}ms ${EASE}, left ${DUR}ms ${EASE}, width ${DUR}ms ${EASE}, height ${DUR}ms ${EASE}, border-radius ${DUR}ms ${EASE}`;
+        place(target(), innerWidth < 768 ? '0px' : '28px');
+        Object.assign(layer.style, { background: 'rgba(0,0,0,.72)', backdropFilter: 'blur(10px)' });
+        scroll.style.transition = `opacity ${DUR * 0.6}ms ease ${DUR * 0.4}ms`;
+        scroll.style.opacity = 1;
+      }));
+      setTimeout(() => panel.querySelector('[data-close]')?.focus({ preventScroll: true }), DUR);
+    }
+
+    // close() pasa por el historial para que el "atrás" del celular también cierre
+    function close() { if (current && !closing) history.back(); }
+
+    function animateClose() {
+      if (!current || closing) return;
+      closing = true;
+      const scroll = panel.firstElementChild;
+      scroll.style.transition = `opacity ${DUR * 0.3}ms ease`;
+      scroll.style.opacity = 0;
+      Object.assign(layer.style, { background: 'rgba(0,0,0,0)', backdropFilter: 'blur(0px)' });
+      const visible = sourceCard && sourceCard.getClientRects().length;
+      if (visible) place(rectOf(sourceCard), '24px'); else panel.style.opacity = 0;
+      setTimeout(() => {
+        if (sourceCard) sourceCard.style.visibility = '';
+        layer.remove(); document.documentElement.style.overflow = '';
+        current = sourceCard = null; closing = false;
+      }, DUR);
+    }
+
+    addEventListener('popstate', animateClose);
+    addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+    addEventListener('resize', () => { if (current && !closing) { panel.style.transition = 'none'; place(target(), innerWidth < 768 ? '0px' : '28px'); } });
+    document.addEventListener('click', e => { const b = e.target.closest('[data-expand]'); if (b) open(b.dataset.expand); });
+    return { open, close };
+  })();
 
   const testimonialHTML = t => `
     <figure class="reveal flex flex-col justify-between rounded-3xl border border-white/[.06] bg-coal p-8">
@@ -384,7 +518,6 @@
     $('meta[name="description"]')?.setAttribute('content', `${title(v)} ${v.version} ${v.anio}, ${fmtNum(v.km)} km. ${fmtPrice(v)}. ${v.descripcion || ''}`);
 
     const fotos = fotosDe(v);
-    const spec = (k, val) => val == null || val === '' ? '' : `<div class="flex justify-between gap-6 border-b border-white/[.06] py-4 text-sm"><dt class="text-mute">${k}</dt><dd class="text-right">${esc(val)}</dd></div>`;
 
     $('#vehicle').innerHTML = `
       <nav class="mb-8 text-xs text-mute" aria-label="Migas de pan">
@@ -412,7 +545,7 @@
             <div>
               <p class="text-[11px] uppercase tracking-eyebrow text-accent">Ficha técnica</p>
               <dl class="mt-4">
-                ${spec('Año', v.anio)}${spec('Kilometraje', `${fmtNum(v.km)} km`)}${spec('Motor', v.motor)}${spec('Combustible', v.combustible)}${spec('Transmisión', v.transmision)}${spec('Carrocería', v.tipo)}${spec('Puertas', v.puertas)}${spec('Color', v.color)}
+                ${specList(v)}
               </dl>
             </div>
             <div>
