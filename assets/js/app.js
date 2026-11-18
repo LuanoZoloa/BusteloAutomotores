@@ -460,6 +460,29 @@
       sync();
     }
 
+    // Pedido de búsqueda → WhatsApp
+    const req = $('#requestForm');
+    if (req) {
+      req.addEventListener('input', e => e.target.classList.remove('!border-red-400/60'));
+      req.addEventListener('submit', e => {
+        e.preventDefault();
+        const bad = [...req.querySelectorAll('[required]')].filter(i => !i.value.trim());
+        bad.forEach(i => i.classList.add('!border-red-400/60'));
+        $('.form-error', req).classList.toggle('hidden', !bad.length);
+        if (bad.length) { bad[0].focus(); return; }
+        const d = Object.fromEntries(new FormData(req));
+        const msg = [
+          `Hola ${CONFIG.nombre}, soy ${d.nombre.trim()}. No encontré en la web el auto que busco:`,
+          `• Auto: ${d.auto.trim()}`,
+          d.anio.trim() && `• Año desde: ${d.anio.trim()}`,
+          d.presupuesto.trim() && `• Presupuesto: ${d.presupuesto.trim()}`,
+          d.consulta.trim() && `• Consulta: ${d.consulta.trim()}`,
+          '¿Me ayudan a conseguirlo?',
+        ].filter(Boolean).join('\n');
+        window.open(waUrl(msg), '_blank', 'noopener');
+      });
+    }
+
     $('#testimonials').innerHTML = TESTIMONIOS.map(testimonialHTML).join('');
   };
 
