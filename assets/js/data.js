@@ -4,8 +4,8 @@
    ════════════════════════════════════════════════════════════════ */
 
 const CONFIG = {
-  nombre: 'Nombre Agencia',
-  monograma: 'NA',
+  nombre: 'Bustelo Automotores',
+  monograma: 'BA',
   eslogan: 'Vehículos seleccionados. Negocios bien cerrados.',
   ciudad: 'Ciudad, Provincia',
   direccion: 'Av. Siempre Viva 742',
