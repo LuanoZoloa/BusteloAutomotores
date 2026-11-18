@@ -18,6 +18,7 @@
   const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const fmtNum = n => new Intl.NumberFormat('es-AR').format(Math.round(n));
   const money = (n, moneda = 'USD') => `${moneda === 'USD' ? 'US$' : '$'} ${fmtNum(n)}`;
+  const kmTxt = v => v.km == null ? '' : v.km === 0 ? '0 km' : `${fmtNum(v.km)} km`;
   const fmtPrice = v => v.precio == null ? 'Consultar' : money(v.precio, v.moneda);
   const title = v => `${v.marca} ${v.modelo}`;
   const waUrl = msg => `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(msg)}`;
@@ -27,7 +28,11 @@
 
   // Fotos por convención: img/autos/{id}/01.jpg, 02.jpg …
   const fotoUrl = (v, n = 1) => `img/autos/${v.id.toLowerCase()}/${String(n).padStart(2, '0')}.jpg`;
-  const fotosDe = v => Array.from({ length: Math.max(v.fotos || 1, 1) }, (_, i) => fotoUrl(v, i + 1));
+  // Fotos locales (img/autos/{id}/) + links externos opcionales en `galeria`
+  const fotosDe = v => [
+    ...Array.from({ length: v.fotos ?? 1 }, (_, i) => fotoUrl(v, i + 1)),
+    ...(v.galeria || []),
+  ];
 
   // Mensajes de WhatsApp prellenados por intención
   const MSG = {
@@ -36,7 +41,7 @@
     financiacion: () => `Hola ${CONFIG.nombre}, quiero consultar opciones de financiación.`,
     visita:       () => `Hola ${CONFIG.nombre}, quiero agendar una visita a la agencia. ¿Qué día tienen disponible?`,
     busqueda:     () => `Hola ${CONFIG.nombre}, estoy buscando un vehículo que no vi en la web: `,
-    vehiculo:     v  => `Hola ${CONFIG.nombre}, vi este ${title(v)} ${v.version} ${v.anio} en la web (${fmtPrice(v)} · Ref. ${v.id}) y quiero consultar disponibilidad.`,
+    vehiculo:     v  => `Hola ${CONFIG.nombre}, vi este ${[title(v), v.version, v.anio].filter(Boolean).join(' ')} en la web (${fmtPrice(v)} · Ref. ${v.id}) y quiero consultar disponibilidad.`,
     vehiculoVisita: v => `Hola ${CONFIG.nombre}, quiero coordinar para ver el ${title(v)} ${v.anio} (Ref. ${v.id}). ¿Cuándo puedo pasar?`,
   };
 
@@ -77,7 +82,7 @@
       <img src="${esc(src)}" alt="${esc(alt)}" loading="lazy" decoding="async" class="absolute inset-0 h-full w-full object-cover text-transparent" onerror="this.classList.add('is-broken')" />
     </div>`;
 
-  const badge = txt => `<span class="rounded-full border border-white/10 px-3 py-1 text-[11px] text-bone/80">${esc(txt)}</span>`;
+  const badge = txt => !txt && txt !== 0 ? '' : `<span class="rounded-full border border-white/10 px-3 py-1 text-[11px] text-bone/80">${esc(txt)}</span>`;
 
   const logoHTML = (size = 'h-9 w-9') => CONFIG.logo
     ? `<img src="${esc(CONFIG.logo)}" alt="${esc(CONFIG.nombre)}" class="${size} rounded-full object-cover ring-1 ring-white/10" />`
@@ -113,7 +118,7 @@
           <h3 class="font-display ${p.big ? 'text-4xl md:text-5xl' : 'text-3xl md:text-4xl'} leading-[1.02] transition hover:text-accent">${esc(title(v))}</h3>
         </button>
         <p class="mt-2 text-sm text-mute">${esc(v.version)}</p>
-        <div class="mt-5 flex flex-wrap gap-2">${badge(`${fmtNum(v.km)} km`)}${badge(v.combustible)}${badge(v.transmision)}${badge(v.tipo)}</div>
+        <div class="mt-5 flex flex-wrap gap-2">${badge(kmTxt(v))}${badge(v.combustible)}${badge(v.transmision)}${badge(v.tipo)}</div>
         <div class="mt-auto flex items-center justify-between gap-4 pt-7">
           <p class="font-display text-3xl ${v.precio == null ? 'text-bone/70' : ''}">${fmtPrice(v)}</p>
           <button type="button" data-expand="${esc(v.id)}" class="inline-flex shrink-0 items-center rounded-full bg-bone px-5 py-3 text-[13px] font-medium text-ink transition hover:bg-accent">Más info</button>
@@ -123,7 +128,7 @@
   }
 
   const specRow = (k, val) => val == null || val === '' ? '' : `<div class="flex justify-between gap-6 border-b border-white/[.06] py-3.5 text-sm"><dt class="text-mute">${k}</dt><dd class="text-right">${esc(val)}</dd></div>`;
-  const specList = v => specRow('Año', v.anio) + specRow('Kilometraje', `${fmtNum(v.km)} km`) + specRow('Motor', v.motor) + specRow('Combustible', v.combustible) + specRow('Transmisión', v.transmision) + specRow('Carrocería', v.tipo) + specRow('Puertas', v.puertas) + specRow('Color', v.color);
+  const specList = v => specRow('Año', v.anio) + specRow('Kilometraje', kmTxt(v)) + specRow('Motor', v.motor) + specRow('Combustible', v.combustible) + specRow('Transmisión', v.transmision) + specRow('Carrocería', v.tipo) + specRow('Puertas', v.puertas) + specRow('Color', v.color);
 
   /* ──────────────────────────────────────────────────────────────
      02b · VISTA EXPANDIDA
@@ -492,7 +497,7 @@
     const f = { q: params.get('q') || '', comb: '', trans: '', orden: 'destacados' };
     FILTER_KEYS.forEach(k => f[k] = params.get(k) || '');
     const sel = { marca: $('#fMarca'), modelo: $('#fModelo'), anio: $('#fAnio'), tipo: $('#fTipo') };
-    const simple = (el, label, opts) => el.innerHTML = `<option value="">${label}</option>` + opts.map(o => `<option>${esc(o)}</option>`).join('');
+    const simple = (el, label, opts) => el.innerHTML = `<option value="">${label}</option>` + opts.filter(Boolean).map(o => `<option>${esc(o)}</option>`).join('');
     simple($('#fComb'), 'Combustible', uniq(all, 'combustible'));
     simple($('#fTrans'), 'Transmisión', uniq(all, 'transmision'));
     $('#fQ').value = f.q;
@@ -502,7 +507,7 @@
       'precio-asc':  (a, b) => (a.precio ?? Infinity) - (b.precio ?? Infinity),
       'precio-desc': (a, b) => (b.precio ?? -1) - (a.precio ?? -1),
       'anio-desc':   (a, b) => b.anio - a.anio,
-      'km-asc':      (a, b) => a.km - b.km,
+      'km-asc':      (a, b) => (a.km ?? Infinity) - (b.km ?? Infinity),
     };
 
     const syncUrl = () => {
@@ -548,7 +553,7 @@
     if (!v) { $('#vehicle').innerHTML = $('#notFound').innerHTML; return; }
 
     document.title = `${title(v)} ${v.version} ${v.anio} · ${CONFIG.nombre}`;
-    $('meta[name="description"]')?.setAttribute('content', `${title(v)} ${v.version} ${v.anio}, ${fmtNum(v.km)} km. ${fmtPrice(v)}. ${v.descripcion || ''}`);
+    $('meta[name="description"]')?.setAttribute('content', [`${[title(v), v.version, v.anio].filter(Boolean).join(' ')}`, kmTxt(v), v.precio != null && fmtPrice(v), v.descripcion].filter(Boolean).join('. '));
 
     const fotos = fotosDe(v);
 
@@ -594,14 +599,13 @@
         <aside class="min-w-0 lg:col-span-5">
           <div class="rounded-3xl border border-white/[.06] bg-coal p-7 md:p-9 lg:sticky lg:top-28">
             <div class="flex items-center justify-between text-[11px] uppercase tracking-eyebrow text-mute">
-              <span>${esc(v.marca)} · ${v.anio}</span><span>Ref ${esc(v.id)}</span>
+              <span>${v.anio}</span><span>Ref ${esc(v.id)}</span>
             </div>
-            <h1 class="mt-4 font-display text-5xl leading-[.95] md:text-6xl">${esc(v.modelo)}</h1>
+            <h1 class="mt-4 font-display text-5xl leading-[1.02] md:text-6xl">${esc(title(v))}</h1>
             <p class="mt-3 text-mute">${esc(v.version)}</p>
-            <div class="mt-6 flex flex-wrap gap-2">${badge(`${fmtNum(v.km)} km`)}${badge(v.combustible)}${badge(v.transmision)}</div>
+            <div class="mt-6 flex flex-wrap gap-2">${badge(kmTxt(v))}${badge(v.combustible)}${badge(v.transmision)}</div>
             <div class="mt-8 border-t border-white/[.06] pt-6">
-              <p class="text-[10px] uppercase tracking-eyebrow text-mute">Precio</p>
-              <p class="mt-1 font-display text-5xl ${v.precio == null ? ' text-bone/70' : ''}">${fmtPrice(v)}</p>
+              <p class="font-display text-5xl ${v.precio == null ? ' text-bone/70' : ''}">${fmtPrice(v)}</p>
             </div>
             <div class="mt-8 flex flex-col gap-3">
               <a href="${waUrl(MSG.vehiculo(v))}" target="_blank" rel="noopener" class="rounded-full bg-bone px-6 py-4 text-center text-sm font-medium text-ink transition hover:bg-accent">Consultar por WhatsApp</a>

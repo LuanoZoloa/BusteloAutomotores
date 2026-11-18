@@ -54,32 +54,32 @@ const CONFIG = {
    id:     código corto y único. También define la carpeta de fotos:
            id 'A01' → img/autos/a01/01.jpg, 02.jpg, 03.jpg …
    fotos:  cuántas fotos hay en esa carpeta (01.jpg es la portada).
-   precio: null → muestra "Consultar".
+   precio: null → muestra "Consultar".   km: null → no se muestra.
+   galeria: ['https://…jpg', …] → fotos extra por link (se suman después de las locales).
+   Cualquier dato en '' (vacío) simplemente no aparece en la web.
    moneda: 'USD' | 'ARS'
    estado: 'Disponible' | 'Reservado' | 'Vendido' (Vendido se oculta)
+
+   ⚠ Cargado desde las historias de Instagram (nov 2026). Faltan
+     precios, kilometrajes y algunos datos: completar con la agencia.
    ─────────────────────────────────────────────────────────────── */
 const VEHICULOS = [
-  { id: 'A01', marca: 'BMW', modelo: 'Serie 2 240i', version: 'M Sport Coupé', anio: 2021, km: 28000, combustible: 'Nafta', transmision: 'Automática', tipo: 'Coupé', motor: '3.0 turbo · 340 CV', color: 'Negro zafiro', puertas: 2, precio: 58500, moneda: 'USD', destacado: true, estado: 'Disponible', fotos: 5,
-    descripcion: 'Único dueño, service oficial al día. Un coupé de seis cilindros con el balance justo entre uso diario y fin de semana.',
-    equipamiento: ['Techo solar', 'Butacas deportivas', 'Harman Kardon', 'Head-up display', 'Cámara trasera', 'Control crucero adaptativo'] },
-  { id: 'A02', marca: 'Jeep', modelo: 'Compass', version: 'Limited 1.3T', anio: 2022, km: 41000, combustible: 'Nafta', transmision: 'Automática', tipo: 'SUV', motor: '1.3 turbo · 175 CV', color: 'Gris granito', puertas: 5, precio: 33900, moneda: 'USD', destacado: true, estado: 'Disponible', fotos: 5,
-    descripcion: 'SUV familiar con equipamiento completo y bajo kilometraje. Cubiertas nuevas.',
-    equipamiento: ['Cuero', 'Cámara 360°', 'Apple CarPlay', 'Portón eléctrico', 'Climatizador bizona'] },
-  { id: 'A03', marca: 'Toyota', modelo: 'Hilux', version: 'SRX 2.8 4x4', anio: 2023, km: 32000, combustible: 'Diésel', transmision: 'Automática', tipo: 'Pickup', motor: '2.8 turbodiésel · 204 CV', color: 'Blanco perla', puertas: 4, precio: 47000, moneda: 'USD', destacado: true, estado: 'Disponible', fotos: 5,
-    descripcion: 'Tope de gama, uso particular, nunca hizo campo. Garantía de fábrica vigente.',
-    equipamiento: ['4x4', 'Control crucero', 'Cuero', '7 airbags', 'Pantalla 8"'] },
-  { id: 'A04', marca: 'Volkswagen', modelo: 'Amarok', version: 'V6 Extreme', anio: 2020, km: 78000, combustible: 'Diésel', transmision: 'Automática', tipo: 'Pickup', motor: '3.0 V6 TDI · 258 CV', color: 'Azul raven', puertas: 4, precio: 39500, moneda: 'USD', destacado: false, estado: 'Reservado', fotos: 4,
-    descripcion: 'La V6 más buscada. Services en concesionario oficial.',
-    equipamiento: ['V6 258 CV', 'Navegador', 'Llantas 20"', 'Butacas ergoComfort'] },
-  { id: 'A05', marca: 'Audi', modelo: 'A3 Sedán', version: '1.4 TFSI', anio: 2019, km: 55000, combustible: 'Nafta', transmision: 'Automática', tipo: 'Sedán', motor: '1.4 TFSI · 150 CV', color: 'Plata', puertas: 4, precio: 27800, moneda: 'USD', destacado: false, estado: 'Disponible', fotos: 4,
-    descripcion: 'Sedán premium compacto, impecable de interior.',
-    equipamiento: ['Virtual cockpit', 'Xenón', 'Sensor de lluvia'] },
-  { id: 'A06', marca: 'Mercedes-Benz', modelo: 'GLA 250', version: 'AMG Line', anio: 2021, km: 36000, combustible: 'Nafta', transmision: 'Automática', tipo: 'SUV', motor: '2.0 turbo · 224 CV', color: 'Blanco polar', puertas: 5, precio: null, moneda: 'USD', destacado: false, estado: 'Disponible', fotos: 4,
-    descripcion: 'Paquete AMG Line completo. Consultá precio y condiciones.',
-    equipamiento: ['MBUX', 'Techo panorámico', 'Iluminación ambiente'] },
-  { id: 'A07', marca: 'Peugeot', modelo: '208', version: 'GT 1.6', anio: 2022, km: 24000, combustible: 'Nafta', transmision: 'Automática', tipo: 'Hatchback', motor: '1.6 · 115 CV', color: 'Rojo elixir', puertas: 5, precio: 21500, moneda: 'USD', destacado: false, estado: 'Disponible', fotos: 4,
-    descripcion: 'Versión GT, ideal ciudad. Primer dueño.',
-    equipamiento: ['i-Cockpit 3D', 'Cámara trasera', 'Full LED'] },
+  { id: 'A08', marca: 'Ford', modelo: 'Territory', version: 'Titanium', anio: 2026, km: null, combustible: 'Nafta', transmision: 'Automática', tipo: 'SUV', motor: '', color: 'Negro', puertas: 5, precio: null, moneda: 'USD', destacado: true, estado: 'Disponible', fotos: 1,
+    descripcion: '', equipamiento: [] },
+  { id: 'A02', marca: 'Volkswagen', modelo: 'Amarok', version: 'V6 Extreme', anio: 2021, km: null, combustible: 'Diésel', transmision: 'Automática', tipo: 'Pickup', motor: 'V6 · 258 CV', color: 'Plata', puertas: 4, precio: null, moneda: 'USD', destacado: true, estado: 'Disponible', fotos: 1,
+    descripcion: 'Único dueño. La V6 de 258 CV en su versión tope de gama.', equipamiento: [] },
+  { id: 'A05', marca: 'Toyota', modelo: 'Corolla', version: 'XEI Pack CVT', anio: 2024, km: null, combustible: 'Nafta', transmision: 'Automática', tipo: 'Sedán', motor: '', color: 'Gris', puertas: 4, precio: null, moneda: 'USD', destacado: true, estado: 'Disponible', fotos: 3,
+    descripcion: '', equipamiento: [] },
+  { id: 'A07', marca: 'Mercedes-Benz', modelo: 'A250', version: 'AMG Line', anio: 2022, km: 24000, combustible: 'Nafta', transmision: 'Automática', tipo: 'Hatchback', motor: '', color: 'Plata', puertas: 5, precio: null, moneda: 'USD', destacado: true, estado: 'Disponible', fotos: 2,
+    descripcion: 'Única mano, services oficiales.', equipamiento: [] },
+  { id: 'A03', marca: 'Peugeot', modelo: '208', version: 'Allure Automático', anio: 2026, km: 0, combustible: 'Nafta', transmision: 'Automática', tipo: 'Hatchback', motor: '', color: '', puertas: 5, precio: null, moneda: 'USD', destacado: false, estado: 'Disponible', fotos: 3,
+    descripcion: '0 km.', equipamiento: [] },
+  { id: 'A06', marca: 'Hyundai', modelo: 'Tucson', version: '2.0 Nafta', anio: 2011, km: null, combustible: 'Nafta', transmision: 'Manual', tipo: 'SUV', motor: '2.0', color: 'Plata', puertas: 5, precio: null, moneda: 'USD', destacado: false, estado: 'Disponible', fotos: 3,
+    descripcion: '', equipamiento: [] },
+  { id: 'A01', marca: 'Fiat', modelo: 'Siena', version: '1.4 GNC', anio: 2016, km: null, combustible: 'Nafta/GNC', transmision: 'Manual', tipo: 'Sedán', motor: '1.4', color: 'Blanco', puertas: 4, precio: null, moneda: 'USD', destacado: false, estado: 'Disponible', fotos: 1,
+    descripcion: 'Equipo de GNC de 5ta generación.', equipamiento: [] },
+  { id: 'A04', marca: 'Ford', modelo: 'F100', version: '', anio: 1985, km: null, combustible: '', transmision: 'Manual', tipo: 'Pickup', motor: '', color: 'Rojo', puertas: 2, precio: null, moneda: 'USD', destacado: false, estado: 'Disponible', fotos: 3,
+    descripcion: '', equipamiento: [] },
 ];
 
 const TESTIMONIOS = [
