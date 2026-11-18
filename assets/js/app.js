@@ -68,11 +68,11 @@
   /* ──────────────────────────────────────────────────────────────
      02 · COMPONENTES
      ────────────────────────────────────────────────────────────── */
-  // Imagen con placeholder elegante (si la foto falta, queda la marca en serif)
+  // Imagen con placeholder elegante (si la foto falta, queda la marca de fondo)
   const media = (src, alt, label, cls = '') => `
     <div class="media relative overflow-hidden bg-smoke ${cls}">
       <div class="absolute inset-0 grid place-items-center bg-[radial-gradient(80%_80%_at_70%_20%,#222,#111)]">
-        <span class="px-4 text-center font-serif text-5xl  text-white/10 md:text-6xl">${esc(label)}</span>
+        <span class="px-4 text-center font-display text-5xl  text-white/10 md:text-6xl">${esc(label)}</span>
       </div>
       <img src="${esc(src)}" alt="${esc(alt)}" loading="lazy" decoding="async" class="absolute inset-0 h-full w-full object-cover" onerror="this.classList.add('is-broken')" />
     </div>`;
@@ -81,7 +81,7 @@
 
   const logoHTML = (size = 'h-9 w-9') => CONFIG.logo
     ? `<img src="${esc(CONFIG.logo)}" alt="${esc(CONFIG.nombre)}" class="${size} rounded-full object-cover ring-1 ring-white/10" />`
-    : `<span class="grid ${size} place-items-center rounded-full border border-white/15 font-serif text-lg  text-bone">${esc(CONFIG.monograma)}</span>`;
+    : `<span class="grid ${size} place-items-center rounded-full border border-white/15 font-display text-lg  text-bone">${esc(CONFIG.monograma)}</span>`;
 
   // Patrón asimétrico de 12 columnas: 7+5 / 5+7 / 4+4+4
   const PATTERN = [
@@ -109,13 +109,13 @@
       </a>
       <div class="flex flex-1 flex-col p-6 md:p-7">
         <p class="text-[11px] uppercase tracking-eyebrow text-mute">${esc(v.marca)} · ${v.anio}</p>
-        <a href="${vUrl(v)}"><h3 class="mt-2 font-serif ${p.big ? 'text-4xl md:text-5xl' : 'text-3xl md:text-4xl'} leading-none transition hover:text-accent">${esc(v.modelo)}</h3></a>
+        <a href="${vUrl(v)}"><h3 class="mt-2 font-display ${p.big ? 'text-4xl md:text-5xl' : 'text-3xl md:text-4xl'} leading-none transition hover:text-accent">${esc(v.modelo)}</h3></a>
         <p class="mt-2 text-sm text-mute">${esc(v.version)}</p>
         <div class="mt-5 flex flex-wrap gap-2">${badge(`${fmtNum(v.km)} km`)}${badge(v.combustible)}${badge(v.transmision)}${badge(v.tipo)}</div>
         <div class="mt-auto flex items-end justify-between gap-4 pt-7">
           <div>
             <p class="text-[10px] uppercase tracking-eyebrow text-mute">Precio</p>
-            <p class="mt-1 font-serif text-3xl ${v.precio == null ? ' text-bone/70' : ''}">${fmtPrice(v)}</p>
+            <p class="mt-1 font-display text-3xl ${v.precio == null ? ' text-bone/70' : ''}">${fmtPrice(v)}</p>
           </div>
           <a href="${waUrl(MSG.vehiculo(v))}" target="_blank" rel="noopener" class="inline-flex shrink-0 items-center gap-2 rounded-full bg-bone px-5 py-3 text-[13px] font-medium text-ink transition hover:bg-accent">
             Consultar <span class="arrow">→</span>
@@ -127,9 +127,9 @@
 
   const testimonialHTML = t => `
     <figure class="reveal flex flex-col justify-between rounded-3xl border border-white/[.06] bg-coal p-8">
-      <blockquote class="font-serif text-2xl leading-snug">“${esc(t.texto)}”</blockquote>
+      <blockquote class="font-display text-2xl leading-snug">“${esc(t.texto)}”</blockquote>
       <figcaption class="mt-10 flex items-center gap-3 text-sm">
-        <span class="grid h-10 w-10 place-items-center rounded-full bg-smoke font-serif  text-accent">${esc(t.nombre[0])}</span>
+        <span class="grid h-10 w-10 place-items-center rounded-full bg-smoke font-display  text-accent">${esc(t.nombre[0])}</span>
         <span><span class="block">${esc(t.nombre)}</span><span class="text-xs text-mute">${esc(t.lugar)}</span></span>
       </figcaption>
     </figure>`;
@@ -164,7 +164,7 @@
         </div>
       </div>
       <div id="mobileMenu" class="mx-auto mt-2 hidden max-w-6xl rounded-3xl border border-white/10 bg-ink/95 p-6 backdrop-blur-xl md:hidden">
-        <nav class="flex flex-col gap-4 font-serif text-3xl">
+        <nav class="flex flex-col gap-4 font-display text-3xl">
           <a href="index.html" class="${PAGE === 'home' ? 'text-accent' : ''}">Inicio</a>
           ${NAV.map(n => `<a href="${n.href}" class="${n.key === activeKey ? 'text-accent' : ''}">${n.label}</a>`).join('')}
         </nav>
@@ -186,7 +186,7 @@
       <div class="mx-auto grid max-w-7xl gap-12 px-5 py-16 text-sm md:grid-cols-2 md:px-10 lg:grid-cols-12">
         <div class="lg:col-span-4">
           <div class="flex items-center gap-3">${logoHTML()}<span class="font-medium">${esc(CONFIG.nombre)}</span></div>
-          <p class="mt-5 max-w-xs font-serif text-2xl  leading-snug text-bone/70">${esc(CONFIG.eslogan)}</p>
+          <p class="mt-5 max-w-xs font-display text-2xl  leading-snug text-bone/70">${esc(CONFIG.eslogan)}</p>
         </div>
         <div class="lg:col-span-2">
           <p class="text-[11px] uppercase tracking-eyebrow text-mute">Navegación</p>
@@ -263,12 +263,6 @@
     requestAnimationFrame(step);
   }
 
-  function marquee() {
-    const el = $('#brandMarquee'); if (!el) return;
-    const row = uniq(stock(), 'marca').map(b => `<span>${esc(b)}</span><span class="text-accent/40">·</span>`).join('');
-    el.innerHTML = row.repeat(8);
-  }
-
   /* ──────────────────────────────────────────────────────────────
      05 · PÁGINAS
      ────────────────────────────────────────────────────────────── */
@@ -294,8 +288,6 @@
       addEventListener('scroll', () => { if (!ticking) { requestAnimationFrame(update); ticking = true; } }, { passive: true });
       update();
     }
-    marquee();
-
     // Destacados: hasta 4, completa con los más nuevos
     const sorted = [...stock()].sort((a, b) => (b.destacado - a.destacado) || (b.anio - a.anio)).slice(0, 4);
     $('#featured').innerHTML = sorted.map((v, i) => card(v, i)).join('');
@@ -306,8 +298,8 @@
       const n = stock().filter(v => v.tipo === t).length;
       return `<a href="stock.html?tipo=${encodeURIComponent(t)}" class="row-link reveal group flex items-baseline justify-between border-b border-white/[.06] py-6 md:py-8">
         <span class="flex items-baseline gap-6">
-          <span class="w-8 font-serif text-lg  text-mute">${String(i + 1).padStart(2, '0')}</span>
-          <span class="row-label font-serif text-5xl md:text-7xl">${esc(t)}</span>
+          <span class="w-8 font-display text-lg  text-mute">${String(i + 1).padStart(2, '0')}</span>
+          <span class="row-label font-display text-5xl md:text-7xl">${esc(t)}</span>
         </span>
         <span class="flex items-center gap-4 text-sm text-mute"><span>${n} ${n === 1 ? 'unidad' : 'unidades'}</span><span class="arrow">→</span></span>
       </a>`;
@@ -318,7 +310,6 @@
 
   /* ---------- STOCK ---------- */
   Pages.stock = () => {
-    marquee();
     const state = {
       q: params.get('q') || '',
       tipo: params.get('tipo') || 'Todos',
@@ -426,7 +417,7 @@
             </div>
             <div>
               ${v.descripcion ? `<p class="text-[11px] uppercase tracking-eyebrow text-accent">Sobre esta unidad</p>
-              <p class="mt-4 font-serif text-2xl leading-snug">${esc(v.descripcion)}</p>` : ''}
+              <p class="mt-4 font-display text-2xl leading-snug">${esc(v.descripcion)}</p>` : ''}
               ${v.equipamiento?.length ? `<p class="mt-10 text-[11px] uppercase tracking-eyebrow text-accent">Equipamiento destacado</p>
               <ul class="mt-4 space-y-3 text-sm">${v.equipamiento.map(e => `<li class="flex gap-3"><span class="text-accent">—</span>${esc(e)}</li>`).join('')}</ul>` : ''}
             </div>
@@ -439,12 +430,12 @@
             <div class="flex items-center justify-between text-[11px] uppercase tracking-eyebrow text-mute">
               <span>${esc(v.marca)} · ${v.anio}</span><span>Ref ${esc(v.id)}</span>
             </div>
-            <h1 class="mt-4 font-serif text-5xl leading-[.95] md:text-6xl">${esc(v.modelo)}</h1>
+            <h1 class="mt-4 font-display text-5xl leading-[.95] md:text-6xl">${esc(v.modelo)}</h1>
             <p class="mt-3 text-mute">${esc(v.version)}</p>
             <div class="mt-6 flex flex-wrap gap-2">${badge(`${fmtNum(v.km)} km`)}${badge(v.combustible)}${badge(v.transmision)}</div>
             <div class="mt-8 border-t border-white/[.06] pt-6">
               <p class="text-[10px] uppercase tracking-eyebrow text-mute">Precio</p>
-              <p class="mt-1 font-serif text-5xl ${v.precio == null ? ' text-bone/70' : ''}">${fmtPrice(v)}</p>
+              <p class="mt-1 font-display text-5xl ${v.precio == null ? ' text-bone/70' : ''}">${fmtPrice(v)}</p>
             </div>
             <div class="mt-8 flex flex-col gap-3">
               <a href="${waUrl(MSG.vehiculo(v))}" target="_blank" rel="noopener" class="rounded-full bg-bone px-6 py-4 text-center text-sm font-medium text-ink transition hover:bg-accent">Consultar por WhatsApp</a>
@@ -481,7 +472,7 @@
     // Barra fija mobile (precio + CTA siempre visibles)
     $('#mobileBar').innerHTML = `
       <div class="flex items-center justify-between gap-4">
-        <div class="min-w-0"><p class="truncate text-xs text-mute">${esc(title(v))} ${v.anio}</p><p class="font-serif text-2xl">${fmtPrice(v)}</p></div>
+        <div class="min-w-0"><p class="truncate text-xs text-mute">${esc(title(v))} ${v.anio}</p><p class="font-display text-2xl">${fmtPrice(v)}</p></div>
         <a href="${waUrl(MSG.vehiculo(v))}" target="_blank" rel="noopener" class="shrink-0 rounded-full bg-bone px-6 py-3 text-sm font-medium text-ink">Consultar</a>
       </div>`;
 
@@ -585,7 +576,7 @@
     $('#historia').innerHTML = CONFIG.historia.map(p => `<p>${esc(p)}</p>`).join('');
     $('#faq').innerHTML = CONFIG.faq.map(f => `
       <details class="reveal group border-b border-white/[.06] py-6">
-        <summary class="flex cursor-pointer list-none items-center justify-between gap-6 font-serif text-2xl md:text-3xl">
+        <summary class="flex cursor-pointer list-none items-center justify-between gap-6 font-display text-2xl md:text-3xl">
           ${esc(f.q)}<span class="faq-icon grid h-9 w-9 shrink-0 place-items-center rounded-full border border-white/10 font-sans text-lg text-mute">+</span>
         </summary>
         <p class="mt-4 max-w-2xl text-[15px] leading-relaxed text-mute">${esc(f.a)}</p>

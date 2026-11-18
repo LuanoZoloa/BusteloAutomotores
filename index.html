@@ -10,7 +10,7 @@
   <link rel="icon" href="img/brand/favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="assets/js/tailwind.config.js"></script>
   <link rel="stylesheet" href="assets/css/styles.css" />
@@ -30,9 +30,9 @@
 
         <div class="relative mx-auto w-full max-w-7xl px-5 md:px-10">
           <p class="hero-fade mb-6 text-[11px] uppercase tracking-eyebrow text-accent" data-cfg="ciudad"></p>
-          <h1 class="font-serif leading-[.88] tracking-[-0.02em]">
+          <h1 class="font-display hero-title leading-[.9]">
             <span class="hero-line-a block text-[19vw] md:text-[12.5vw]">Bustelo</span>
-            <span class="hero-line-b block whitespace-nowrap text-[15vw]  text-bone/90 md:pl-[8vw] md:text-[12.5vw]">Automotores</span>
+            <span class="hero-line-b block whitespace-nowrap text-[14vw] text-bone/90 md:pl-[8vw] md:text-[11vw]">Automotores</span>
           </h1>
           <div class="hero-rule mt-8 h-px w-full bg-gradient-to-r from-accent/70 to-transparent"></div>
           <div class="hero-fade mt-8">
@@ -47,13 +47,10 @@
     <!-- ═══ FRANJA DE CONFIANZA ═══ -->
     <section class="border-y border-white/[.06]">
       <div class="mx-auto grid max-w-7xl grid-cols-2 md:grid-cols-4">
-        <div class="reveal px-5 py-10 md:border-r md:border-white/[.06] md:px-10"><p class="font-serif text-5xl"><span data-count="years">0</span><span class="text-accent">+</span></p><p class="mt-2 text-xs uppercase tracking-eyebrow text-mute">Años en el rubro</p></div>
-        <div class="reveal border-l border-white/[.06] px-5 py-10 md:border-l-0 md:border-r md:px-10"><p class="font-serif text-5xl"><span data-count="sold">0</span><span class="text-accent">+</span></p><p class="mt-2 text-xs uppercase tracking-eyebrow text-mute">Operaciones cerradas</p></div>
-        <div class="reveal border-t border-white/[.06] px-5 py-10 md:border-r md:border-t-0 md:px-10"><p class="font-serif text-5xl"><span data-count="rating" data-decimals="1">0</span><span class="text-accent">★</span></p><p class="mt-2 text-xs uppercase tracking-eyebrow text-mute">Reseñas en Google</p></div>
-        <div class="reveal border-l border-t border-white/[.06] px-5 py-10 md:border-l-0 md:border-t-0 md:px-10"><p class="font-serif text-5xl" data-stock-count>0</p><p class="mt-2 text-xs uppercase tracking-eyebrow text-mute">Unidades en stock</p></div>
-      </div>
-      <div class="overflow-hidden border-t border-white/[.06] py-5">
-        <div id="brandMarquee" class="marquee-track flex w-max gap-14 whitespace-nowrap font-serif text-2xl  text-white/25"></div>
+        <div class="reveal px-5 py-10 md:border-r md:border-white/[.06] md:px-10"><p class="font-display text-5xl"><span data-count="years">0</span><span class="text-accent">+</span></p><p class="mt-2 text-xs uppercase tracking-eyebrow text-mute">Años en el rubro</p></div>
+        <div class="reveal border-l border-white/[.06] px-5 py-10 md:border-l-0 md:border-r md:px-10"><p class="font-display text-5xl"><span data-count="sold">0</span><span class="text-accent">+</span></p><p class="mt-2 text-xs uppercase tracking-eyebrow text-mute">Operaciones cerradas</p></div>
+        <div class="reveal border-t border-white/[.06] px-5 py-10 md:border-r md:border-t-0 md:px-10"><p class="font-display text-5xl"><span data-count="rating" data-decimals="1">0</span><span class="text-accent">★</span></p><p class="mt-2 text-xs uppercase tracking-eyebrow text-mute">Reseñas en Google</p></div>
+        <div class="reveal border-l border-t border-white/[.06] px-5 py-10 md:border-l-0 md:border-t-0 md:px-10"><p class="font-display text-5xl" data-stock-count>0</p><p class="mt-2 text-xs uppercase tracking-eyebrow text-mute">Unidades en stock</p></div>
       </div>
     </section>
 
@@ -61,8 +58,7 @@
     <section class="mx-auto max-w-7xl px-5 py-28 md:px-10 md:py-36">
       <div class="reveal mb-14 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
         <div>
-          <p class="mb-4 text-[11px] uppercase tracking-eyebrow text-accent">Destacados</p>
-          <h2 class="font-serif text-5xl leading-[.95] md:text-7xl">Cada unidad,<br /><span class="text-bone/70">elegida a mano.</span></h2>
+          <h2 class="font-display text-5xl leading-[.95] md:text-7xl">Destacados</h2>
         </div>
         <a href="stock.html" class="group inline-flex items-center gap-3 self-start rounded-full border border-white/15 px-6 py-3 text-sm transition hover:border-white/40 md:self-auto"><span>Ver todo el stock (<span data-stock-count></span>)</span> <span class="transition group-hover:translate-x-1">→</span></a>
       </div>
@@ -72,7 +68,7 @@
     <!-- ═══ BUSCAR POR CARROCERÍA ═══ -->
     <section class="border-t border-white/[.06] bg-coal">
       <div class="mx-auto max-w-7xl px-5 py-28 md:px-10 md:py-36">
-        <p class="reveal mb-10 text-[11px] uppercase tracking-eyebrow text-accent">Buscá por carrocería</p>
+        <h2 class="reveal mb-10 font-display text-5xl leading-[.95] md:text-7xl">Buscá por carrocería</h2>
         <div id="typeRows" class="border-t border-white/[.06]"></div>
       </div>
     </section>
@@ -81,16 +77,16 @@
     <section class="mx-auto grid max-w-7xl gap-5 px-5 py-28 md:grid-cols-2 md:px-10 md:py-36">
       <a href="usado.html" class="card reveal group relative flex min-h-[420px] flex-col justify-between overflow-hidden rounded-3xl border border-white/[.06] bg-coal p-8 transition hover:border-white/15 md:p-12">
         <div class="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-accent/10 blur-3xl"></div>
-        <p class="text-[11px] uppercase tracking-eyebrow text-accent">Parte de pago</p>
+        <span></span>
         <div>
-          <h3 class="font-serif text-5xl leading-[.95] md:text-6xl">Tu usado vale.<br /><span class="text-bone/70">Te lo decimos en el día.</span></h3>
+          <h3 class="font-display text-5xl leading-[.95] md:text-6xl">Parte de pago</h3>
           <p class="mt-6 inline-flex items-center gap-3 text-sm">Cotizar mi usado <span class="arrow">→</span></p>
         </div>
       </a>
       <a href="financiacion.html" class="card reveal group relative flex min-h-[420px] flex-col justify-between overflow-hidden rounded-3xl border border-white/[.06] bg-coal p-8 transition hover:border-white/15 md:p-12">
-        <p class="text-[11px] uppercase tracking-eyebrow text-accent">Financiación</p>
+        <span></span>
         <div>
-          <h3 class="font-serif text-5xl leading-[.95] md:text-6xl">Simulá tu cuota<br /><span class="text-bone/70">en 30 segundos.</span></h3>
+          <h3 class="font-display text-5xl leading-[.95] md:text-6xl">Financiación</h3>
           <p class="mt-6 inline-flex items-center gap-3 text-sm">Abrir simulador <span class="arrow">→</span></p>
         </div>
       </a>
@@ -99,7 +95,7 @@
     <!-- ═══ TESTIMONIOS ═══ -->
     <section class="mx-auto max-w-7xl px-5 pb-28 md:px-10 md:pb-36">
       <div class="reveal mb-14 flex items-end justify-between">
-        <h2 class="font-serif text-5xl leading-[.95] md:text-6xl">Lo dicen<br /><span class="text-bone/70">quienes ya manejan.</span></h2>
+        <h2 class="font-display text-5xl leading-[.95] md:text-7xl">Testimonios</h2>
         <a data-href="reviews" target="_blank" rel="noopener" class="hidden text-sm text-mute underline-offset-4 hover:text-bone hover:underline md:block">Ver reseñas en Google →</a>
       </div>
       <div id="testimonials" class="grid gap-5 md:grid-cols-3"></div>
@@ -109,7 +105,7 @@
     <section class="relative overflow-hidden border-t border-white/[.06]">
       <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(50%_60%_at_50%_100%,rgba(211,32,42,.12),transparent_70%)]"></div>
       <div class="reveal relative mx-auto max-w-5xl px-5 py-32 text-center md:py-44">
-        <h2 class="font-serif text-6xl leading-[.9] md:text-8xl">Tu próximo auto<br /><span class="text-accent">está a un mensaje.</span></h2>
+        <h2 class="font-display text-6xl leading-[.9] md:text-8xl">Tu próximo auto<br /><span class="text-accent">está a un mensaje.</span></h2>
         <p class="mx-auto mt-8 max-w-md text-[15px] text-mute">Respuesta en minutos en horario comercial. Sin vueltas, sin compromiso.</p>
         <div class="mt-12 flex flex-wrap justify-center gap-3">
           <a data-wa="general" class="rounded-full bg-bone px-8 py-4 text-sm font-medium text-ink transition hover:bg-accent">Escribinos por WhatsApp</a>

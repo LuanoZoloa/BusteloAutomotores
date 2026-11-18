@@ -11,8 +11,8 @@ tailwind.config = {
         accent: '#D3202A',     // rojo Bustelo (del logo)
       },
       fontFamily: {
-        serif: ['"Instrument Serif"', 'Georgia', 'serif'],
-        sans: ['Geist', 'Inter', 'system-ui', 'sans-serif'],
+        display: ['Onest', 'system-ui', 'sans-serif'],   // títulos
+        sans: ['Onest', 'system-ui', 'sans-serif'],      // cuerpo
       },
       letterSpacing: { eyebrow: '0.28em' },
     },
