@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es-AR" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cotizá tu usado · Nombre Agencia</title>
+  <meta name="description" content="Tomamos tu usado en parte de pago. Tasación en el día, sin compromiso." />
+  <meta name="theme-color" content="#0B0B0B" />
+  <link rel="icon" href="img/brand/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="assets/js/tailwind.config.js"></script>
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body data-page="usado" class="bg-ink font-sans text-bone selection:bg-champagne selection:text-ink">
+  <div id="site-header"></div>
+
+  <main class="pt-36 md:pt-44">
+    <section class="mx-auto grid max-w-7xl gap-16 px-5 pb-28 md:px-10 md:pb-36 lg:grid-cols-12">
+      <!-- ═══ COPY + PROCESO ═══ -->
+      <div class="lg:col-span-5">
+        <p class="reveal mb-4 text-[11px] uppercase tracking-eyebrow text-champagne">Parte de pago</p>
+        <h1 class="reveal font-serif text-6xl leading-[.9] md:text-7xl">Tu usado vale.<br /><em class="text-bone/70">Te lo decimos en el día.</em></h1>
+        <p class="reveal mt-8 max-w-sm text-[15px] leading-relaxed text-mute">Completá los datos, te abrimos WhatsApp con todo listo y nos mandás unas fotos. Respondemos con una tasación real, sin compromiso.</p>
+
+        <ol class="mt-14 space-y-8">
+          <li class="reveal flex gap-6"><span class="font-serif text-2xl italic text-champagne">01</span><div><p class="font-medium">Nos contás qué tenés</p><p class="mt-1 text-sm text-mute">Datos básicos y 4–6 fotos: frente, laterales, interior y tablero.</p></div></li>
+          <li class="reveal flex gap-6"><span class="font-serif text-2xl italic text-champagne">02</span><div><p class="font-medium">Te pasamos un valor</p><p class="mt-1 text-sm text-mute">Tasación por fotos el mismo día hábil.</p></div></li>
+          <li class="reveal flex gap-6"><span class="font-serif text-2xl italic text-champagne">03</span><div><p class="font-medium">Lo confirmamos en persona</p><p class="mt-1 text-sm text-mute">Revisión de 20 minutos en la agencia y cerramos la operación.</p></div></li>
+        </ol>
+      </div>
+
+      <!-- ═══ FORMULARIO → WhatsApp ═══ -->
+      <div class="reveal lg:col-span-7">
+        <form id="usadoForm" class="rounded-3xl border border-white/[.06] bg-coal p-7 md:p-10" novalidate>
+          <div class="flex items-center justify-between">
+            <p class="font-serif text-3xl">Datos de tu vehículo</p>
+            <span class="text-xs text-mute">* obligatorio</span>
+          </div>
+          <p id="interes" class="mt-4 hidden rounded-xl border border-champagne/30 bg-champagne/5 px-4 py-3 text-sm"></p>
+
+          <div class="mt-8 grid gap-4 md:grid-cols-2">
+            <label class="block"><span class="mb-2 block text-xs text-mute">Marca *</span><input name="marca" required class="field" placeholder="Ej: Volkswagen" /></label>
+            <label class="block"><span class="mb-2 block text-xs text-mute">Modelo *</span><input name="modelo" required class="field" placeholder="Ej: Vento" /></label>
+            <label class="block"><span class="mb-2 block text-xs text-mute">Versión</span><input name="version" class="field" placeholder="Ej: 1.4 TSI Highline" /></label>
+            <label class="block"><span class="mb-2 block text-xs text-mute">Año *</span><select id="uAnio" name="anio" required class="field select-ui"></select></label>
+            <label class="block"><span class="mb-2 block text-xs text-mute">Kilómetros *</span><input name="km" required inputmode="numeric" class="field" placeholder="Ej: 85.000" /></label>
+            <label class="block"><span class="mb-2 block text-xs text-mute">Estado general</span>
+              <select name="estado" class="field select-ui">
+                <option value="">Elegí una opción</option><option>Excelente</option><option>Muy bueno</option><option>Bueno</option><option>Necesita detalles</option>
+              </select>
+            </label>
+            <label class="block md:col-span-2"><span class="mb-2 block text-xs text-mute">Comentarios</span><textarea name="comentario" rows="3" class="field resize-none" placeholder="Service al día, único dueño, detalles a mencionar…"></textarea></label>
+          </div>
+
+          <p id="formError" class="mt-4 hidden text-sm text-red-300">Completá los campos obligatorios.</p>
+
+          <button type="submit" class="mt-8 flex w-full items-center justify-center gap-3 rounded-full bg-bone px-7 py-4 text-sm font-medium text-ink transition hover:bg-champagne">
+            Enviar por WhatsApp <span>→</span>
+          </button>
+          <p class="mt-4 text-center text-xs text-mute">Se abre WhatsApp con tu mensaje armado. Después adjuntás las fotos.</p>
+        </form>
+      </div>
+    </section>
+
+    <!-- ═══ GARANTÍAS ═══ -->
+    <section class="border-t border-white/[.06] bg-coal">
+      <ul class="mx-auto grid max-w-7xl gap-px bg-white/[.06] md:grid-cols-3">
+        <li class="reveal bg-coal px-5 py-14 md:px-10"><p class="font-serif text-3xl">Todas las marcas</p><p class="mt-2 text-sm text-mute">Autos, SUVs, pickups y utilitarios.</p></li>
+        <li class="reveal bg-coal px-5 py-14 md:px-10"><p class="font-serif text-3xl">Valor por escrito</p><p class="mt-2 text-sm text-mute">Sin letra chica ni cambios a último momento.</p></li>
+        <li class="reveal bg-coal px-5 py-14 md:px-10"><p class="font-serif text-3xl">Papeles resueltos</p><p class="mt-2 text-sm text-mute">Nuestra gestoría se ocupa de la transferencia.</p></li>
+      </ul>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script>
+    // Validación visual mínima (el envío lo maneja app.js)
+    document.getElementById('usadoForm').addEventListener('submit', e => {
+      const bad = [...e.target.querySelectorAll('[required]')].filter(i => !i.value.trim());
+      bad.forEach(i => i.classList.add('!border-red-400/60'));
+      document.getElementById('formError').classList.toggle('hidden', !bad.length);
+      if (bad.length) { e.stopImmediatePropagation(); e.preventDefault(); bad[0].focus(); }
+    }, true);
+    document.getElementById('usadoForm').addEventListener('input', e => e.target.classList.remove('!border-red-400/60'));
+  </script>
+</body>
+</html>
