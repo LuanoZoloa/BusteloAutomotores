@@ -30,21 +30,23 @@
 
     <!-- ═══ FILTROS ═══ -->
     <section class="mx-auto max-w-7xl px-5 pt-14 md:px-10">
-      <div class="reveal z-30 -mx-2 rounded-2xl border border-white/[.06] bg-ink/80 p-2 backdrop-blur-xl lg:sticky lg:top-[88px]">
+      <div class="reveal -mx-2 rounded-2xl border border-white/[.06] bg-coal p-2">
         <div class="flex flex-col gap-2">
-          <div class="flex flex-col gap-2 lg:flex-row lg:items-center">
-            <label class="relative flex-1">
-              <span class="sr-only">Buscar</span>
-              <svg class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-mute" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6" cy="6" r="5"/><path d="M10 10l3 3"/></svg>
-              <input id="fQ" type="search" placeholder="Buscar marca, modelo o año" class="field" style="padding-left:2.6rem" autocomplete="off" />
-            </label>
-            <div id="typeChips" class="no-scrollbar flex gap-1 overflow-x-auto px-1" role="tablist" aria-label="Tipo de vehículo"></div>
-          </div>
+          <label class="relative">
+            <span class="sr-only">Buscar</span>
+            <svg class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-mute" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6" cy="6" r="5"/><path d="M10 10l3 3"/></svg>
+            <input id="fQ" type="search" placeholder="Buscar por texto: marca, modelo, versión o año" class="field" style="padding-left:2.6rem" autocomplete="off" />
+          </label>
           <div class="grid grid-cols-2 gap-2 md:grid-cols-4">
             <select id="fMarca" class="field select-ui" aria-label="Marca"></select>
+            <select id="fModelo" class="field select-ui" aria-label="Modelo"></select>
+            <select id="fAnio" class="field select-ui" aria-label="Año"></select>
+            <select id="fTipo" class="field select-ui" aria-label="Tipo"></select>
+          </div>
+          <div class="grid grid-cols-2 gap-2 md:grid-cols-3">
             <select id="fComb" class="field select-ui" aria-label="Combustible"></select>
             <select id="fTrans" class="field select-ui" aria-label="Transmisión"></select>
-            <select id="fOrden" class="field select-ui" aria-label="Ordenar">
+            <select id="fOrden" class="field select-ui col-span-2 md:col-span-1" aria-label="Ordenar">
               <option value="destacados">Destacados primero</option>
               <option value="precio-asc">Menor precio</option>
               <option value="precio-desc">Mayor precio</option>

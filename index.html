@@ -65,11 +65,19 @@
       <div id="featured" class="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-12 lg:gap-6"></div>
     </section>
 
-    <!-- ═══ BUSCAR POR CARROCERÍA ═══ -->
+    <!-- ═══ BUSCADOR ═══ -->
     <section class="border-t border-white/[.06] bg-coal">
       <div class="mx-auto max-w-7xl px-5 py-28 md:px-10 md:py-36">
-        <h2 class="reveal mb-10 font-display text-5xl leading-[.95] md:text-7xl">Buscá por carrocería</h2>
-        <div id="typeRows" class="border-t border-white/[.06]"></div>
+        <h2 class="reveal mb-10 font-display text-5xl leading-[.95] md:text-7xl">Buscá tu auto</h2>
+        <form id="homeSearch" class="reveal rounded-3xl border border-white/[.06] bg-ink p-4 md:p-5" novalidate>
+          <div class="grid grid-cols-2 gap-3 lg:grid-cols-[repeat(4,minmax(0,1fr))_auto]">
+            <label class="block"><span class="mb-2 block px-1 text-[11px] uppercase tracking-eyebrow text-mute">Marca</span><select name="marca" class="field select-ui"></select></label>
+            <label class="block"><span class="mb-2 block px-1 text-[11px] uppercase tracking-eyebrow text-mute">Modelo</span><select name="modelo" class="field select-ui"></select></label>
+            <label class="block"><span class="mb-2 block px-1 text-[11px] uppercase tracking-eyebrow text-mute">Año</span><select name="anio" class="field select-ui"></select></label>
+            <label class="block"><span class="mb-2 block px-1 text-[11px] uppercase tracking-eyebrow text-mute">Tipo</span><select name="tipo" class="field select-ui"></select></label>
+            <button id="homeSearchBtn" type="submit" class="self-end rounded-xl bg-bone px-7 py-[.85rem] text-sm font-medium text-ink transition hover:bg-accent col-span-2 lg:col-span-1">Buscar</button>
+          </div>
+        </form>
       </div>
     </section>
 

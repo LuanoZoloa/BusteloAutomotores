@@ -397,6 +397,22 @@
     requestAnimationFrame(step);
   }
 
+
+  /* Motor de filtros compartido (buscador del inicio + página de Stock) */
+  const FILTER_KEYS = ['marca', 'modelo', 'anio', 'tipo'];
+  const matches = (v, f, skip) => FILTER_KEYS.every(k => k === skip || !f[k] || String(v[k]) === String(f[k]));
+  // Opciones de cada desplegable según lo ya elegido en los demás (nunca ofrece combinaciones vacías)
+  const optionsFor = (list, f, k) => {
+    const vals = [...new Set(list.filter(v => matches(v, f, k)).map(v => v[k]))];
+    return k === 'anio' ? vals.sort((a, b) => b - a) : vals.sort((a, b) => String(a).localeCompare(b, 'es'));
+  };
+  const FILTER_LABELS = { marca: 'Todas las marcas', modelo: 'Todos los modelos', anio: 'Todos los años', tipo: 'Todos los tipos' };
+  function fillSelect(el, k, opts, value) {
+    el.innerHTML = `<option value="">${FILTER_LABELS[k]}</option>` + opts.map(o => `<option value="${esc(o)}">${esc(o)}</option>`).join('');
+    el.value = opts.map(String).includes(String(value)) ? value : '';
+    return el.value;
+  }
+
   /* ──────────────────────────────────────────────────────────────
      05 · PÁGINAS
      ────────────────────────────────────────────────────────────── */
@@ -426,41 +442,37 @@
     const sorted = [...stock()].sort((a, b) => (b.destacado - a.destacado) || (b.anio - a.anio)).slice(0, 4);
     $('#featured').innerHTML = sorted.map((v, i) => card(v, i)).join('');
 
-    // Carrocerías como filas editoriales
-    const tipos = uniq(stock(), 'tipo');
-    $('#typeRows').innerHTML = tipos.map((t, i) => {
-      const n = stock().filter(v => v.tipo === t).length;
-      return `<a href="stock.html?tipo=${encodeURIComponent(t)}" class="row-link reveal group flex items-baseline justify-between border-b border-white/[.06] py-6 md:py-8">
-        <span class="flex items-baseline gap-6">
-          <span class="w-8 font-display text-lg  text-mute">${String(i + 1).padStart(2, '0')}</span>
-          <span class="row-label font-display text-5xl md:text-7xl">${esc(t)}</span>
-        </span>
-        <span class="flex items-center gap-4 text-sm text-mute"><span>${n} ${n === 1 ? 'unidad' : 'unidades'}</span><span class="arrow">→</span></span>
-      </a>`;
-    }).join('');
+    // Buscador: desplegables dependientes → stock.html?marca=…&modelo=…&anio=…&tipo=…
+    const form = $('#homeSearch');
+    if (form) {
+      const all = stock(), f = {};
+      const sync = () => {
+        FILTER_KEYS.forEach(k => { f[k] = fillSelect(form.elements[k], k, optionsFor(all, f, k), f[k]); });
+        const n = all.filter(v => matches(v, f)).length;
+        $('#homeSearchBtn').textContent = n ? `Ver ${n} ${n === 1 ? 'unidad' : 'unidades'}` : 'Sin resultados';
+      };
+      form.addEventListener('change', e => { f[e.target.name] = e.target.value; sync(); });
+      form.addEventListener('submit', e => {
+        e.preventDefault();
+        const u = new URLSearchParams(); FILTER_KEYS.forEach(k => f[k] && u.set(k, f[k]));
+        location.href = `stock.html${u.toString() ? '?' + u : ''}`;
+      });
+      sync();
+    }
 
     $('#testimonials').innerHTML = TESTIMONIOS.map(testimonialHTML).join('');
   };
 
   /* ---------- STOCK ---------- */
   Pages.stock = () => {
-    const state = {
-      q: params.get('q') || '',
-      tipo: params.get('tipo') || 'Todos',
-      marca: params.get('marca') || '',
-      comb: '', trans: '', orden: 'destacados',
-    };
     const all = stock();
-    const fill = (el, label, opts) => el.innerHTML = `<option value="">${label}</option>` + opts.map(o => `<option>${esc(o)}</option>`).join('');
-    fill($('#fMarca'), 'Todas las marcas', uniq(all, 'marca'));
-    fill($('#fComb'), 'Combustible', uniq(all, 'combustible'));
-    fill($('#fTrans'), 'Transmisión', uniq(all, 'transmision'));
-    $('#fMarca').value = state.marca; $('#fQ').value = state.q;
-
-    const chips = $('#typeChips');
-    const renderChips = () => chips.innerHTML = ['Todos', ...uniq(all, 'tipo')].map(t => `
-      <button type="button" role="tab" aria-selected="${state.tipo === t}" data-tipo="${esc(t)}"
-        class="shrink-0 rounded-xl px-4 py-2.5 text-[13px] transition ${state.tipo === t ? 'bg-bone text-ink' : 'text-mute hover:text-bone'}">${esc(t)}</button>`).join('');
+    const f = { q: params.get('q') || '', comb: '', trans: '', orden: 'destacados' };
+    FILTER_KEYS.forEach(k => f[k] = params.get(k) || '');
+    const sel = { marca: $('#fMarca'), modelo: $('#fModelo'), anio: $('#fAnio'), tipo: $('#fTipo') };
+    const simple = (el, label, opts) => el.innerHTML = `<option value="">${label}</option>` + opts.map(o => `<option>${esc(o)}</option>`).join('');
+    simple($('#fComb'), 'Combustible', uniq(all, 'combustible'));
+    simple($('#fTrans'), 'Transmisión', uniq(all, 'transmision'));
+    $('#fQ').value = f.q;
 
     const sorters = {
       'destacados':  (a, b) => (b.destacado - a.destacado) || (b.anio - a.anio),
@@ -472,21 +484,20 @@
 
     const syncUrl = () => {
       const u = new URLSearchParams();
-      if (state.q) u.set('q', state.q);
-      if (state.tipo !== 'Todos') u.set('tipo', state.tipo);
-      if (state.marca) u.set('marca', state.marca);
-      history.replaceState(null, '', `${location.pathname}${u.toString() ? '?' + u : ''}`);
+      if (f.q) u.set('q', f.q);
+      FILTER_KEYS.forEach(k => f[k] && u.set(k, f[k]));
+      history.replaceState(history.state, '', `${location.pathname}${u.toString() ? '?' + u : ''}`);
     };
 
     function render() {
-      const q = state.q.trim().toLowerCase();
+      FILTER_KEYS.forEach(k => { f[k] = fillSelect(sel[k], k, optionsFor(all, f, k), f[k]); });
+      const q = f.q.trim().toLowerCase();
       const list = all
+        .filter(v => matches(v, f))
         .filter(v => !q || `${v.marca} ${v.modelo} ${v.version} ${v.anio}`.toLowerCase().includes(q))
-        .filter(v => state.tipo === 'Todos' || v.tipo === state.tipo)
-        .filter(v => !state.marca || v.marca === state.marca)
-        .filter(v => !state.comb || v.combustible === state.comb)
-        .filter(v => !state.trans || v.transmision === state.trans)
-        .sort(sorters[state.orden]);
+        .filter(v => !f.comb || v.combustible === f.comb)
+        .filter(v => !f.trans || v.transmision === f.trans)
+        .sort(sorters[f.orden]);
       $('#resultCount').textContent = list.length;
       $('#grid').innerHTML = list.map((v, i) => card(v, i)).join('');
       $('#emptyState').classList.toggle('hidden', list.length > 0);
@@ -494,19 +505,18 @@
       syncUrl();
     }
 
-    chips.addEventListener('click', e => { const b = e.target.closest('[data-tipo]'); if (!b) return; state.tipo = b.dataset.tipo; renderChips(); render(); });
-    let t; $('#fQ').addEventListener('input', e => { clearTimeout(t); t = setTimeout(() => { state.q = e.target.value; render(); }, 150); });
-    $('#fMarca').addEventListener('change', e => { state.marca = e.target.value; render(); });
-    $('#fComb').addEventListener('change', e => { state.comb = e.target.value; render(); });
-    $('#fTrans').addEventListener('change', e => { state.trans = e.target.value; render(); });
-    $('#fOrden').addEventListener('change', e => { state.orden = e.target.value; render(); });
+    Object.entries(sel).forEach(([k, el]) => el.addEventListener('change', e => { f[k] = e.target.value; render(); }));
+    let t; $('#fQ').addEventListener('input', e => { clearTimeout(t); t = setTimeout(() => { f.q = e.target.value; render(); }, 150); });
+    $('#fComb').addEventListener('change', e => { f.comb = e.target.value; render(); });
+    $('#fTrans').addEventListener('change', e => { f.trans = e.target.value; render(); });
+    $('#fOrden').addEventListener('change', e => { f.orden = e.target.value; render(); });
     $('#clearFilters').addEventListener('click', () => {
-      Object.assign(state, { q: '', tipo: 'Todos', marca: '', comb: '', trans: '', orden: 'destacados' });
-      ['#fQ', '#fMarca', '#fComb', '#fTrans'].forEach(s => $(s).value = '');
+      Object.assign(f, { q: '', marca: '', modelo: '', anio: '', tipo: '', comb: '', trans: '', orden: 'destacados' });
+      ['#fQ', '#fComb', '#fTrans'].forEach(s => $(s).value = '');
       $('#fOrden').value = 'destacados';
-      renderChips(); render();
+      render();
     });
-    renderChips(); render();
+    render();
   };
 
   /* ---------- FICHA DE VEHÍCULO ---------- */

@@ -36,12 +36,8 @@ body::before {
 .media img { transition: transform 1.2s cubic-bezier(.2,.7,.2,1), opacity .5s; }
 .media img.is-broken { opacity: 0; }
 .card:hover .media img { transform: scale(1.045); }
-.card .arrow, .row-link .arrow { transition: transform .4s cubic-bezier(.2,.7,.2,1); }
-.card:hover .arrow, .row-link:hover .arrow { transform: translateX(4px); }
-
-/* Filas editoriales (tipos de carrocería) */
-.row-link .row-label { transition: transform .6s cubic-bezier(.2,.7,.2,1), color .4s; }
-.row-link:hover .row-label { transform: translateX(14px); color: #D3202A; }
+.card .arrow { transition: transform .4s cubic-bezier(.2,.7,.2,1); }
+.card:hover .arrow { transform: translateX(4px); }
 
 /* WhatsApp flotante */
 @keyframes ring { 0% { box-shadow: 0 0 0 0 rgba(211,32,42,.35); } 100% { box-shadow: 0 0 0 18px rgba(211,32,42,0); } }
