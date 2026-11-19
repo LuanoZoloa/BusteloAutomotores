@@ -25,8 +25,22 @@ body::before {
 .hero-line-a { transform: translate3d(calc(var(--p) * -14%), 0, 0); }
 .hero-line-b { transform: translate3d(calc(var(--p) * 14%), 0, 0); }
 .hero-fade   { opacity: calc(1 - var(--p) * 1.6); transform: translate3d(0, calc(var(--p) * -40px), 0); }
-.hero-bg     { transform: scale(calc(1.08 - var(--p) * .08)); opacity: calc(.5 - var(--p) * .3); }
-.hero-rule   { transform: scaleX(calc(.15 + var(--p) * .85)); transform-origin: left; }
+.hero-bg     { transform: scale(calc(1.08 - var(--p) * .08)); opacity: calc(.9 - var(--p) * .5); }
+.hero-rule   { transform: scaleX(calc(.3 + var(--p) * .7)); transform-origin: center; }
+
+/* Ruleta de cifras (tragamonedas) */
+.slot-window { position: relative; display: flex; align-items: flex-start; line-height: 1; height: 1em; overflow: hidden; }
+.slot-window::before, .slot-window::after { content: ""; position: absolute; left: 0; right: 0; height: .22em; z-index: 1; pointer-events: none; }
+.slot-window::before { top: 0; background: linear-gradient(#111, transparent); }
+.slot-window::after { bottom: 0; background: linear-gradient(transparent, #111); }
+.slot-col { display: inline-block; height: 1em; overflow: hidden; }
+.slot-strip { display: flex; flex-direction: column; filter: blur(.04em); transform: translateY(0);
+  transition: transform var(--dur) cubic-bezier(.12,.75,.2,1.04), filter var(--dur) cubic-bezier(.5,0,.75,0); }
+.slot-strip > span { display: block; height: 1em; line-height: 1; text-align: center; font-variant-numeric: tabular-nums; }
+.is-spun .slot-strip { transform: translateY(-30em); filter: blur(0); }
+.slot-card { transition: border-color .6s; }
+.is-spun .slot-card { animation: slot-glow .9s ease calc(1500ms + var(--i) * 550ms + 150ms) 1 none; }
+@keyframes slot-glow { 0% { border-color: rgba(211,32,42,.7); } 100% { border-color: rgba(255,255,255,.06); } }
 
 /* Reveal */
 .reveal { opacity: 0; transform: translateY(24px); transition: opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1); }

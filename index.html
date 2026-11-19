@@ -19,39 +19,40 @@
   <div id="site-header"></div>
 
   <main>
-    <!-- ═══ HERO · tipografía monumental + scrollytelling ═══ -->
+    <!-- ═══ HERO · foto de la agencia + título centrado con scrollytelling ═══ -->
     <section id="hero" class="relative h-[160vh]">
-      <div class="sticky top-0 flex h-screen flex-col justify-end overflow-hidden pb-10 md:pb-14">
+      <div class="sticky top-0 flex h-screen flex-col justify-end overflow-hidden">
         <div class="pointer-events-none absolute inset-0">
-          <div id="heroImg" class="hero-bg absolute inset-0 bg-cover bg-center"></div>
-          <div class="absolute inset-0 bg-[radial-gradient(60%_50%_at_70%_30%,rgba(211,32,42,.10),transparent_70%)]"></div>
-          <div class="absolute inset-0 bg-gradient-to-t from-ink via-ink/60 to-ink/20"></div>
+          <div id="heroImg" class="hero-bg absolute inset-0 bg-cover bg-[center_22%]"></div>
+          <div class="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-ink/80 to-transparent"></div>
+          <div class="absolute inset-0 bg-gradient-to-t from-ink via-ink/70 to-transparent"></div>
         </div>
 
-        <div class="relative mx-auto w-full max-w-7xl px-5 md:px-10">
-          <p class="hero-fade mb-6 text-[11px] uppercase tracking-eyebrow text-accent" data-cfg="ciudad"></p>
-          <h1 class="font-display hero-title leading-[.9]">
-            <span class="hero-line-a block text-[19vw] md:text-[12.5vw]">Bustelo</span>
-            <span class="hero-line-b block whitespace-nowrap text-[14vw] text-bone/90 md:pl-[8vw] md:text-[11vw]">Automotores</span>
+        <div class="relative mx-auto w-full max-w-7xl px-5 text-center md:px-10">
+          <p class="hero-fade mb-5 text-[11px] uppercase tracking-eyebrow text-accent" data-cfg="ciudad"></p>
+          <h1 class="font-display hero-title leading-[.95]">
+            <span class="hero-line-a block text-[12vw] md:text-[6.5vw]">Bustelo</span>
+            <span class="hero-line-b block text-[12vw] text-bone/90 md:text-[6.5vw]">Automotores</span>
           </h1>
-          <div class="hero-rule mt-8 h-px w-full bg-gradient-to-r from-accent/70 to-transparent"></div>
-          <div class="hero-fade mt-8">
-            <div class="flex flex-wrap items-center gap-3">
-              <a href="stock.html" class="inline-flex items-center rounded-full bg-bone px-7 py-4 text-sm font-medium text-ink transition hover:bg-accent">Stock disponible</a>
-            </div>
+          <div class="hero-rule mx-auto mt-7 h-px w-full max-w-md bg-gradient-to-r from-transparent via-accent/80 to-transparent"></div>
+          <div class="hero-fade mt-7 flex justify-center">
+            <a href="stock.html" class="inline-flex items-center rounded-full bg-bone px-7 py-4 text-sm font-medium text-ink transition hover:bg-accent">Stock disponible</a>
+          </div>
+        </div>
+
+        <!-- Horarios -->
+        <div class="hero-fade relative mt-10 border-t border-white/[.08] bg-ink/40 backdrop-blur-md md:mt-14">
+          <div class="mx-auto flex max-w-7xl flex-col items-center justify-center gap-3 px-5 pb-24 pt-4 text-xs text-mute md:flex-row md:gap-8 md:px-10 md:pb-4">
+            <div data-open-status class="inline-flex items-center gap-2 text-bone"></div>
+            <div data-hours-inline class="flex flex-wrap justify-center gap-x-6 gap-y-1"></div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ═══ FRANJA DE CONFIANZA ═══ -->
-    <section class="border-y border-white/[.06]">
-      <div class="mx-auto grid max-w-7xl grid-cols-2 md:grid-cols-4">
-        <div class="reveal px-5 py-10 md:border-r md:border-white/[.06] md:px-10"><p class="font-display text-5xl"><span data-count="years">0</span><span class="text-accent">+</span></p><p class="mt-2 text-xs uppercase tracking-eyebrow text-mute">Años en el rubro</p></div>
-        <div class="reveal border-l border-white/[.06] px-5 py-10 md:border-l-0 md:border-r md:px-10"><p class="font-display text-5xl"><span data-count="sold">0</span><span class="text-accent">+</span></p><p class="mt-2 text-xs uppercase tracking-eyebrow text-mute">Operaciones cerradas</p></div>
-        <div class="reveal border-t border-white/[.06] px-5 py-10 md:border-r md:border-t-0 md:px-10"><p class="font-display text-5xl"><span data-count="rating" data-decimals="1">0</span><span class="text-accent">★</span></p><p class="mt-2 text-xs uppercase tracking-eyebrow text-mute">Reseñas en Google</p></div>
-        <div class="reveal border-l border-t border-white/[.06] px-5 py-10 md:border-l-0 md:border-t-0 md:px-10"><p class="font-display text-5xl" data-stock-count>0</p><p class="mt-2 text-xs uppercase tracking-eyebrow text-mute">Unidades en stock</p></div>
-      </div>
+    <!-- ═══ CIFRAS · ruleta tipo tragamonedas (datos reales en data.js → CONFIG.cifras) ═══ -->
+    <section class="border-b border-white/[.06]">
+      <div data-slots class="mx-auto grid max-w-7xl grid-cols-2 gap-3 px-5 py-12 md:grid-cols-4 md:gap-4 md:px-10 md:py-16"></div>
     </section>
 
     <!-- ═══ DESTACADOS ═══ -->

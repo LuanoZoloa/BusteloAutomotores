@@ -379,28 +379,22 @@
     $$('[data-hours]').forEach(el => el.innerHTML = hoursHTML());
     $$('[data-open-status]').forEach(el => el.innerHTML = openBadge());
     $$('[data-stock-count]').forEach(el => el.textContent = stock().length);
+    $$('[data-hours-inline]').forEach(el => el.innerHTML = hoursInline());
+    $$('[data-slots]').forEach(el => {
+      el.innerHTML = slotsHTML('slotsCompact' in el.dataset);
+      if (reduceMotion) el.classList.add('is-spun');
+      else new IntersectionObserver((en, o) => { if (en[0].isIntersecting) { spin(el); o.disconnect(); } }, { threshold: 0.4 }).observe(el);
+    });
   }
 
   const io = new IntersectionObserver(entries => entries.forEach(e => {
     if (!e.isIntersecting) return;
     e.target.classList.add('is-in');
-    $$('[data-count]', e.target).forEach(countUp);
     io.unobserve(e.target);
   }), { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
   const observe = (root = document) => $$('.reveal:not(.is-in)', root).forEach(el => io.observe(el));
 
-  function countUp(el) {
-    const target = CONFIG.metricas[el.dataset.count] ?? 0;
-    const dec = +(el.dataset.decimals || 0);
-    if (reduceMotion) { el.textContent = target.toFixed(dec); return; }
-    const t0 = performance.now(), dur = 1400;
-    const step = t => {
-      const k = Math.min((t - t0) / dur, 1), e = 1 - Math.pow(1 - k, 3);
-      el.textContent = dec ? (target * e).toFixed(dec) : fmtNum(target * e);
-      if (k < 1) requestAnimationFrame(step);
-    };
-    requestAnimationFrame(step);
-  }
+
 
 
   /* Motor de filtros compartido (buscador del inicio + página de Stock) */
@@ -417,6 +411,28 @@
     el.value = opts.map(String).includes(String(value)) ? value : '';
     return el.value;
   }
+
+
+  /* Ruleta tipo tragamonedas: cada dígito es un rodillo que gira y frena.
+     Las cifras frenan de izquierda a derecha. */
+  const DIGITS = '0123456789'.repeat(3);
+  function slotsHTML(compact) {
+    return CONFIG.cifras.map((c, i) => `
+      <div class="slot-card reveal rounded-2xl border border-white/[.06] bg-coal ${compact ? 'p-5' : 'p-6 md:p-8'}" style="--i:${i}">
+        <div class="slot-window font-display ${compact ? 'text-4xl' : 'text-5xl md:text-6xl'}" aria-label="${esc(c.valor)}">
+          ${[...c.valor].map((ch, j) => /\d/.test(ch)
+            ? `<span class="slot-col" aria-hidden="true"><span class="slot-strip" style="--dur:${1500 + i * 550 + j * 140}ms">${[...DIGITS].map(n => `<span>${n}</span>`).join('')}<span>${ch}</span><span>${(+ch + 1) % 10}</span></span></span>`
+            : `<span class="slot-static" aria-hidden="true">${ch === ' ' ? '&nbsp;' : esc(ch)}</span>`).join('')}
+        </div>
+        <p class="mt-3 text-[11px] uppercase tracking-eyebrow text-mute">${esc(c.label)}</p>
+      </div>`).join('');
+  }
+  function spin(root) {
+    if (root.dataset.spun) return;
+    root.dataset.spun = '1';
+    requestAnimationFrame(() => root.classList.add('is-spun'));
+  }
+  const hoursInline = () => CONFIG.horarios.map(h => `<span><span class="text-bone/80">${esc(h.label)}</span> ${h.cerrado ? 'cerrado' : `${h.desde.replace(':00', '')} a ${h.hasta.replace(':00', '')} h`}</span>`).join('');
 
   /* ──────────────────────────────────────────────────────────────
      05 · PÁGINAS

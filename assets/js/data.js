@@ -20,7 +20,14 @@ const CONFIG = {
   logo: 'img/brand/logo.png',         // recortado del perfil de IG; reemplazar por el original en alta si lo consiguen
   heroImage: 'img/hero/hero.jpg',     // si no existe, el hero queda con fondo oscuro
 
-  metricas: { years: 15, sold: 1200, rating: 4.9 },   // ⚠ PENDIENTE: valores de ejemplo
+  // Cifras de la ruleta (inicio y La agencia). Solo datos reales.
+  // Los dígitos giran; el resto de los caracteres queda fijo.
+  cifras: [
+    { valor: '30',    label: 'Autos en stock' },             // según la agencia (aprox.)
+    { valor: '3.928', label: 'Seguidores en Instagram' },    // perfil de IG, nov 2026
+    { valor: '6',     label: 'Días abiertos por semana' },   // lunes a sábado
+    { valor: '0 km',  label: 'Y usados' },                    // bio de IG: "Venta de usados y 0KM"
+  ],
 
   horarios: [
     { label: 'Lunes a viernes', dias: [1, 2, 3, 4, 5], desde: '10:00', hasta: '19:00' },
